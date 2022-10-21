@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
+import { DARK_BLUE_50, LIGHT_GREY_50 } from "../constants/color";
+
 const signsArray = [
   "<",
   ">",
@@ -38,9 +40,9 @@ const Container = styled.div`
   flex: 1;
   justify-content: space-around;
   align-items: center;
-  background: #1d2229;
+  background: ${DARK_BLUE_50};
 `;
 
 const SignWrapper = styled.div`
-  color: #d9d9d9;
+  color: ${LIGHT_GREY_50};
 `;

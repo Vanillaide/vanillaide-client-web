@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
+import { DARK_BLUE_100 } from "../constants/color";
+
 export default function CodeArea({ code }) {
   return <Container>{code}</Container>;
 }
@@ -12,6 +14,6 @@ CodeArea.propTypes = {
 const Container = styled.div`
   display: flex;
   flex: 14;
-  background: #262c35;
+  background: ${DARK_BLUE_100};
   color: white;
 `;
