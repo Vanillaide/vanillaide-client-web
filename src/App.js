@@ -14,8 +14,6 @@ import CodeArea from "./components/CodeArea";
 import FunctionHeader from "./components/FunctionHeader/FunctionHeader";
 import ToolBar from "./components/ToolBar";
 
-import "./App.css";
-
 export default function App() {
   const [selectedLanguage, setSelectedLanguage] = useState("html");
   const [code, setCode] = useState({ html: "", css: "", js: "" });
@@ -26,7 +24,7 @@ export default function App() {
     <Layout>
       <AppHeader>
         <MenuWrapper>
-          <FontAwesomeIcon icon={faBars} className="menuBar" />
+          <FontAwesomeIcon icon={faBars} className="function-icon" />
         </MenuWrapper>
         <FunctionHeader
           code={code}

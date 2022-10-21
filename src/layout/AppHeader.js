@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import { HEADER } from "../constants/color";
+import { HEADER, WHITE } from "../constants/color";
 
 export default function AppHeader({ children }) {
   return <Container>{children}</Container>;
@@ -17,4 +17,9 @@ const Container = styled.div`
   justify-content: space-around;
   width: 100%;
   background: ${HEADER};
+
+  .function-icon {
+    font-size: 30px;
+    color: ${WHITE};
+  }
 `;
