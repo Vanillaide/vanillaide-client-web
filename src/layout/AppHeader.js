@@ -9,4 +9,10 @@ AppHeader.propTypes = {
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.array]),
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+  width: 100%;
+  background: #21272f;
+`;
