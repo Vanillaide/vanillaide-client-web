@@ -1,15 +1,30 @@
-import RedoButton from "./RedoButton";
-import RunButton from "./RunButton";
-import SaveButton from "./SaveButton";
-import UndoButton from "./UndoButton";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 
-export default function FunctionHeader() {
+import RedoButton from "./RedoButton/RedoButton";
+import RunButton from "./RunButton/RunButton";
+import SaveButton from "./SaveButton/SaveButton";
+import UndoButton from "./UndoButton/UndoButton";
+
+export default function FunctionHeader({ code, selectedLanguageCode }) {
   return (
-    <div>
-      <RunButton />
-      <UndoButton />
-      <RedoButton />
-      <SaveButton />
-    </div>
+    <Container>
+      <RunButton code={code} />
+      <UndoButton code={selectedLanguageCode} />
+      <RedoButton code={selectedLanguageCode} />
+      <SaveButton code={code} />
+    </Container>
   );
 }
+
+FunctionHeader.propTypes = {
+  code: PropTypes.object.isRequired,
+  selectedLanguageCode: PropTypes.string,
+};
+
+const Container = styled.div`
+  display: flex;
+  flex: 3;
+  justify-content: space-around;
+  align-items: center;
+`;
