@@ -22,8 +22,6 @@ export default function App() {
     js: { content: "js", prev: null, next: null },
   });
 
-  console.log("html코드", code.html);
-
   const selectedLanguageCode = code[selectedLanguage].content;
 
   return (
@@ -50,10 +48,10 @@ export default function App() {
         />
         <ToolBar
           handleChange={(str) =>
-            setCode((prev) => ({
-              ...prev,
+            setCode((prevState) => ({
+              ...prevState,
               [selectedLanguage]: {
-                content: prev[selectedLanguage].content + str,
+                content: prevState[selectedLanguage].content + str,
               },
             }))
           }

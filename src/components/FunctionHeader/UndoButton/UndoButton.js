@@ -6,8 +6,11 @@ import { faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 export default function UndoButton({ code, handleClick, selectedLanguage }) {
   const handleUndoClick = () => {
     if (!code[selectedLanguage].prev) return;
-    handleClick((state) => {
-      return { ...state, [selectedLanguage]: state[selectedLanguage].prev };
+    handleClick((prevState) => {
+      return {
+        ...prevState,
+        [selectedLanguage]: prevState[selectedLanguage].prev,
+      };
     });
   };
   return (

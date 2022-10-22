@@ -6,8 +6,11 @@ import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
 export default function RedoButton({ code, handleClick, selectedLanguage }) {
   const handleRedoClick = () => {
     if (!code[selectedLanguage].next) return;
-    handleClick((state) => {
-      return { ...state, [selectedLanguage]: state[selectedLanguage].next };
+    handleClick((prevState) => {
+      return {
+        ...prevState,
+        [selectedLanguage]: prevState[selectedLanguage].next,
+      };
     });
   };
 

@@ -20,16 +20,16 @@ export default function CodeArea({ code, handleChange, selectedLanguage }) {
   const saveContent = (text, prevText, language) => {
     if (text === prevText) return;
 
-    handleChange((state) => {
+    handleChange((prevState) => {
       const currentContent = {
         content: text,
-        prev: state[language],
+        prev: prevState[language],
         next: null,
       };
 
-      state[language].next = currentContent;
+      prevState[language].next = currentContent;
       return {
-        ...state,
+        ...prevState,
         [language]: currentContent,
       };
     });
