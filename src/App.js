@@ -16,9 +16,13 @@ import ToolBar from "./components/ToolBar";
 
 export default function App() {
   const [selectedLanguage, setSelectedLanguage] = useState("html");
-  const [code, setCode] = useState({ html: "", css: "", js: "" });
+  const [code, setCode] = useState({
+    html: { content: "html", prev: null, next: null },
+    css: { content: "css", prev: null, next: null },
+    js: { content: "js", prev: null, next: null },
+  });
 
-  const selectedLanguageCode = code[selectedLanguage];
+  const selectedLanguageCode = code[selectedLanguage].content;
 
   return (
     <Layout>
@@ -36,12 +40,18 @@ export default function App() {
           selectedLanguage={selectedLanguage}
           handlePress={(language) => setSelectedLanguage(language)}
         />
-        <CodeArea code={selectedLanguageCode} />
+        <CodeArea
+          code={selectedLanguageCode}
+          handleChange={setCode}
+          selectedLanguage={selectedLanguage}
+        />
         <ToolBar
           handleChange={(str) =>
             setCode((prev) => ({
               ...prev,
-              [selectedLanguage]: prev[selectedLanguage] + str,
+              [selectedLanguage]: {
+                content: prev[selectedLanguage].content + str,
+              },
             }))
           }
         />
