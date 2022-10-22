@@ -4,8 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 
 export default function SaveButton({ code }) {
-  console.log(code);
-
   return <FontAwesomeIcon icon={faFloppyDisk} className="function-icon" />;
 }
 

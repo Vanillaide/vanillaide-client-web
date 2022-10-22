@@ -18,7 +18,7 @@ export default function App() {
   const [selectedLanguage, setSelectedLanguage] = useState("html");
   const [code, setCode] = useState({
     html: { content: "html", prev: null, next: null },
-    css: { content: "css", prev: null, next: null },
+    css: { content: "h1 {\n color: red;\n}", prev: null, next: null },
     js: { content: "js", prev: null, next: null },
   });
 
@@ -32,7 +32,8 @@ export default function App() {
         </MenuWrapper>
         <FunctionHeader
           code={code}
-          selectedLanguageCode={selectedLanguageCode}
+          handleClick={setCode}
+          selectedLanguage={selectedLanguage}
         />
       </AppHeader>
       <ContentBox>
@@ -47,10 +48,10 @@ export default function App() {
         />
         <ToolBar
           handleChange={(str) =>
-            setCode((prev) => ({
-              ...prev,
+            setCode((prevState) => ({
+              ...prevState,
               [selectedLanguage]: {
-                content: prev[selectedLanguage].content + str,
+                content: prevState[selectedLanguage].content + str,
               },
             }))
           }
