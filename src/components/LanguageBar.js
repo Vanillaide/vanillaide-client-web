@@ -51,9 +51,3 @@ const LanguageWrapper = styled.div`
   font-size: 20px;
   font-family: "FiraCode";
 `;
-
-// const LanguageBox = styled.div`
-//   width: 100%;
-//   background: ${({ backgroundColor }) => backgroundColor};
-//   border-radius: 10px;
-// `;
