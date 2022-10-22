@@ -14,4 +14,14 @@ const Container = styled.div`
   flex-direction: column;
   flex: 11;
   width: 100%;
+
+  .cm-theme {
+    height: 500px;
+    background: #272c35;
+    overflow: scroll;
+  }
+
+  .ͼ1.cm-editor.cm-focused {
+    outline: 0px;
+  }
 `;
