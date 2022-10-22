@@ -6,12 +6,24 @@ import RunButton from "./RunButton/RunButton";
 import SaveButton from "./SaveButton/SaveButton";
 import UndoButton from "./UndoButton/UndoButton";
 
-export default function FunctionHeader({ code, selectedLanguageCode }) {
+export default function FunctionHeader({
+  code,
+  handleClick,
+  selectedLanguage,
+}) {
   return (
     <Container>
       <RunButton code={code} />
-      <UndoButton code={selectedLanguageCode} />
-      <RedoButton code={selectedLanguageCode} />
+      <UndoButton
+        code={code}
+        handleClick={handleClick}
+        selectedLanguage={selectedLanguage}
+      />
+      <RedoButton
+        code={code}
+        handleClick={handleClick}
+        selectedLanguage={selectedLanguage}
+      />
       <SaveButton code={code} />
     </Container>
   );
@@ -19,7 +31,8 @@ export default function FunctionHeader({ code, selectedLanguageCode }) {
 
 FunctionHeader.propTypes = {
   code: PropTypes.object.isRequired,
-  selectedLanguageCode: PropTypes.string,
+  handleClick: PropTypes.func.isRequired,
+  selectedLanguage: PropTypes.string.isRequired,
 };
 
 const Container = styled.div`

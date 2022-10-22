@@ -32,7 +32,8 @@ export default function App() {
         </MenuWrapper>
         <FunctionHeader
           code={code}
-          selectedLanguageCode={selectedLanguageCode}
+          handleClick={setCode}
+          selectedLanguage={selectedLanguage}
         />
       </AppHeader>
       <ContentBox>
