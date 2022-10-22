@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
+import { LIGHT_GREY_50, CONTENT } from "../constants/color";
+
 export default function LanguageBar({ selectedLanguage, handlePress }) {
   const languagesArray = ["HTML", "CSS", "JS"];
 
@@ -13,8 +15,8 @@ export default function LanguageBar({ selectedLanguage, handlePress }) {
             onClick={() => handlePress(language.toLowerCase())}
             backgroundColor={
               selectedLanguage === language.toLowerCase()
-                ? "#D9D9D9"
-                : "#313842"
+                ? LIGHT_GREY_50
+                : CONTENT
             }
           >
             {language}
@@ -34,7 +36,7 @@ const Container = styled.div`
   display: flex;
   flex: 1;
   justify-content: space-around;
-  background: #313842;
+  background: ${CONTENT};
 `;
 
 const LanguageWrapper = styled.div`
@@ -47,6 +49,7 @@ const LanguageWrapper = styled.div`
   background: ${({ backgroundColor }) => backgroundColor};
   border-radius: 10px;
   font-size: 20px;
+  font-family: "FiraCode";
 `;
 
 // const LanguageBox = styled.div`
