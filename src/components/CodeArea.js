@@ -36,13 +36,7 @@ export default function CodeArea({ code, handleChange, selectedLanguage }) {
   };
 
   const onKeyUpListner = (ev) => {
-    if (
-      ev.code === "Enter" ||
-      ev.code === "Space" ||
-      ev.code === "Backspace" ||
-      ev.code === "Delete" ||
-      ev.code === "Tab"
-    ) {
+    if (ev.code === "Enter" || ev.code === "Space" || ev.code === "Tab") {
       saveContentDebounce(currentCode, code, selectedLanguage, 0);
     }
   };
