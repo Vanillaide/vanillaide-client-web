@@ -17,7 +17,9 @@ function selectLanguageExtension(string) {
 export default function CodeArea({ code, handleChange, selectedLanguage }) {
   const [currentCode, setCurrentCode] = useState(code);
 
-  function saveContent(text, language) {
+  const saveContent = (text, prevText, language) => {
+    if (text === prevText) return;
+
     handleChange((state) => {
       const currentContent = {
         content: text,
@@ -31,10 +33,9 @@ export default function CodeArea({ code, handleChange, selectedLanguage }) {
         [language]: currentContent,
       };
     });
-  }
+  };
 
-  function onKeyUpListner(ev) {
-    if (currentCode === code) return;
+  const onKeyUpListner = (ev) => {
     if (
       ev.code === "Enter" ||
       ev.code === "Space" ||
@@ -42,9 +43,18 @@ export default function CodeArea({ code, handleChange, selectedLanguage }) {
       ev.code === "Delete" ||
       ev.code === "Tab"
     ) {
-      saveContentDebounce(currentCode, selectedLanguage, 0);
+      saveContentDebounce(currentCode, code, selectedLanguage, 0);
     }
-  }
+  };
+
+  const onBlurListner = () => {
+    saveContentDebounce(currentCode, code, selectedLanguage, 0);
+  };
+
+  const onChangeListner = (value) => {
+    setCurrentCode(value);
+    saveContentDebounce(value, code, selectedLanguage, 1000);
+  };
 
   const saveContentDebounce = useCallback(debounce(saveContent), []);
   return (
@@ -52,17 +62,8 @@ export default function CodeArea({ code, handleChange, selectedLanguage }) {
       value={code}
       theme={atomone}
       extensions={selectLanguageExtension(selectedLanguage)}
-      onBlur={() => {
-        if (currentCode === code) return;
-
-        saveContentDebounce(currentCode, selectedLanguage, 0);
-      }}
-      onChange={(ev) => {
-        setCurrentCode(ev);
-        if (currentCode === code) return;
-
-        saveContentDebounce(ev, selectedLanguage, 1000);
-      }}
+      onBlur={onBlurListner}
+      onChange={onChangeListner}
       onKeyUp={onKeyUpListner}
     />
   );

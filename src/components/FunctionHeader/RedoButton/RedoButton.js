@@ -4,16 +4,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
 
 export default function RedoButton({ code, handleClick, selectedLanguage }) {
+  const onClickListner = () => {
+    if (!code[selectedLanguage].next) return;
+    handleClick((state) => {
+      return { ...state, [selectedLanguage]: state[selectedLanguage].next };
+    });
+  };
+
   return (
     <FontAwesomeIcon
       icon={faRotateRight}
       className="function-icon"
-      onClick={() => {
-        if (!code[selectedLanguage].next) return;
-        handleClick((state) => {
-          return { ...state, [selectedLanguage]: state[selectedLanguage].next };
-        });
-      }}
+      onClick={onClickListner}
     />
   );
 }
