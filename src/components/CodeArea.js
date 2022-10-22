@@ -25,7 +25,7 @@ export default function CodeArea({
   wholeCode,
   handleChange,
   selectedLanguage,
-  isRunCliked,
+  isRunClicked,
 }) {
   const [currentCode, setCurrentCode] = useState(code);
   const {
@@ -70,7 +70,7 @@ export default function CodeArea({
   const saveContentDebounce = useCallback(debounce(saveContent), []);
   return (
     <Container>
-      {isRunCliked ? (
+      {isRunClicked ? (
         <ResultViewer srcDoc={integrateCode(htmlCode, cssCode, jsCode)} />
       ) : (
         <CodeMirror
@@ -92,7 +92,7 @@ CodeArea.propTypes = {
   wholeCode: PropTypes.object.isRequired,
   handleChange: PropTypes.func,
   selectedLanguage: PropTypes.string.isRequired,
-  isRunCliked: PropTypes.bool.isRequired,
+  isRunClicked: PropTypes.bool.isRequired,
 };
 
 const Container = styled.div`

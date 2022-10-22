@@ -26,12 +26,12 @@ export default function App() {
       next: null,
     },
   });
-  const [isRunCliked, setIsRunCliked] = useState(false);
+  const [isRunClicked, setIsRunClicked] = useState(false);
 
   const selectedLanguageCode = code[selectedLanguage].content;
 
   const handleLanguageClick = (language) => {
-    setIsRunCliked(false);
+    setIsRunClicked(false);
     setSelectedLanguage(language);
   };
 
@@ -45,7 +45,7 @@ export default function App() {
           code={code}
           handleClick={setCode}
           selectedLanguage={selectedLanguage}
-          handleRunClick={() => setIsRunCliked(true)}
+          handleRunClick={() => setIsRunClicked(true)}
         />
       </AppHeader>
       <ContentBox>
@@ -58,7 +58,7 @@ export default function App() {
           wholeCode={code}
           handleChange={setCode}
           selectedLanguage={selectedLanguage}
-          isRunCliked={isRunCliked}
+          isRunClicked={isRunClicked}
         />
         <ToolBar
           handleChange={(str) =>
