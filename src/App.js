@@ -17,12 +17,23 @@ import ToolBar from "./components/ToolBar";
 export default function App() {
   const [selectedLanguage, setSelectedLanguage] = useState("html");
   const [code, setCode] = useState({
-    html: { content: "html", prev: null, next: null },
+    html: { content: "<h1>This is h1 element</h1>", prev: null, next: null },
     css: { content: "h1 {\n color: red;\n}", prev: null, next: null },
-    js: { content: "js", prev: null, next: null },
+    js: {
+      content:
+        'document.querySelector("h1").addEventListener("click", function () {\n  alert("clicked h1 element");\n});',
+      prev: null,
+      next: null,
+    },
   });
+  const [isRunCliked, setIsRunCliked] = useState(false);
 
   const selectedLanguageCode = code[selectedLanguage].content;
+
+  const handleLanguageClick = (language) => {
+    setIsRunCliked(false);
+    setSelectedLanguage(language);
+  };
 
   return (
     <Layout>
@@ -34,17 +45,20 @@ export default function App() {
           code={code}
           handleClick={setCode}
           selectedLanguage={selectedLanguage}
+          handleRunClick={() => setIsRunCliked(true)}
         />
       </AppHeader>
       <ContentBox>
         <LanguageBar
           selectedLanguage={selectedLanguage}
-          handlePress={(language) => setSelectedLanguage(language)}
+          handlePress={handleLanguageClick}
         />
         <CodeArea
           code={selectedLanguageCode}
+          wholeCode={code}
           handleChange={setCode}
           selectedLanguage={selectedLanguage}
+          isRunCliked={isRunCliked}
         />
         <ToolBar
           handleChange={(str) =>
