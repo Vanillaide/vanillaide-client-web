@@ -18,9 +18,11 @@ export default function App() {
   const [selectedLanguage, setSelectedLanguage] = useState("html");
   const [code, setCode] = useState({
     html: { content: "html", prev: null, next: null },
-    css: { content: "css", prev: null, next: null },
+    css: { content: "h1 {\n color: red;\n}", prev: null, next: null },
     js: { content: "js", prev: null, next: null },
   });
+
+  console.log("html코드", code.html);
 
   const selectedLanguageCode = code[selectedLanguage].content;
 

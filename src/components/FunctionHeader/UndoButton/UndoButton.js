@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function UndoButton({ code, handleClick, selectedLanguage }) {
-  const onClickListner = () => {
+  const handleUndoClick = () => {
     if (!code[selectedLanguage].prev) return;
     handleClick((state) => {
       return { ...state, [selectedLanguage]: state[selectedLanguage].prev };
@@ -14,7 +14,7 @@ export default function UndoButton({ code, handleClick, selectedLanguage }) {
     <FontAwesomeIcon
       icon={faRotateLeft}
       className="function-icon"
-      onClick={onClickListner}
+      onClick={handleUndoClick}
     />
   );
 }

@@ -35,17 +35,17 @@ export default function CodeArea({ code, handleChange, selectedLanguage }) {
     });
   };
 
-  const onKeyUpListner = (ev) => {
+  const handleKeyUp = (ev) => {
     if (ev.code === "Enter" || ev.code === "Space" || ev.code === "Tab") {
       saveContentDebounce(currentCode, code, selectedLanguage, 0);
     }
   };
 
-  const onBlurListner = () => {
+  const handleBlur = () => {
     saveContentDebounce(currentCode, code, selectedLanguage, 0);
   };
 
-  const onChangeListner = (value) => {
+  const handleCodeMirrorChange = (value) => {
     setCurrentCode(value);
     saveContentDebounce(value, code, selectedLanguage, 1000);
   };
@@ -56,9 +56,9 @@ export default function CodeArea({ code, handleChange, selectedLanguage }) {
       value={code}
       theme={atomone}
       extensions={selectLanguageExtension(selectedLanguage)}
-      onBlur={onBlurListner}
-      onChange={onChangeListner}
-      onKeyUp={onKeyUpListner}
+      onBlur={handleBlur}
+      onChange={handleCodeMirrorChange}
+      onKeyUp={handleKeyUp}
     />
   );
 }
