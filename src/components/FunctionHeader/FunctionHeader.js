@@ -10,10 +10,11 @@ export default function FunctionHeader({
   code,
   handleClick,
   selectedLanguage,
+  handleRunClick,
 }) {
   return (
     <Container>
-      <RunButton code={code} />
+      <RunButton code={code} handleClick={handleRunClick} />
       <UndoButton
         code={code}
         handleClick={handleClick}
@@ -33,6 +34,7 @@ FunctionHeader.propTypes = {
   code: PropTypes.object.isRequired,
   handleClick: PropTypes.func.isRequired,
   selectedLanguage: PropTypes.string.isRequired,
+  handleRunClick: PropTypes.func.isRequired,
 };
 
 const Container = styled.div`
