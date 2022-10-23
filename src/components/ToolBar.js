@@ -16,23 +16,23 @@ const signsArray = [
   JSON.stringify(""),
 ];
 
-export default function ToolBar({ handleChange }) {
+export default function ToolBar({ handleClick }) {
   return (
     <Container>
       {signsArray.map((sign) => {
         return (
-          <SignWrapper key={sign} onClick={() => handleChange(sign)}>
+          <SignWrapper key={sign} onClick={() => handleClick(sign)}>
             {sign}
           </SignWrapper>
         );
       })}
-      <SignWrapper onClick={() => handleChange("  ")}>TAB</SignWrapper>
+      <SignWrapper onClick={() => handleClick("  ")}>TAB</SignWrapper>
     </Container>
   );
 }
 
 ToolBar.propTypes = {
-  handleChange: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired,
 };
 
 const Container = styled.div`
