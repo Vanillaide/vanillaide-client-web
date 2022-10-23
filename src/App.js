@@ -36,6 +36,18 @@ export default function App() {
     setSelectedLanguage(language);
   };
 
+  const handleSignClick = (sign) => {
+    setCode((prevState) => {
+      const currentContent = {
+        content: prevState[selectedLanguage].content + sign,
+        prev: prevState[selectedLanguage],
+        next: null,
+      };
+      prevState[selectedLanguage].next = currentContent;
+      return { ...prevState, [selectedLanguage]: currentContent };
+    });
+  };
+
   const handleOnMessage = (ev) => {
     const loadedCode = JSON.parse(ev.data);
 
@@ -83,16 +95,7 @@ export default function App() {
               selectedLanguage={selectedLanguage}
               isRunClicked={isRunClicked}
             />
-            <ToolBar
-              handleChange={(str) =>
-                setCode((prevState) => ({
-                  ...prevState,
-                  [selectedLanguage]: {
-                    content: prevState[selectedLanguage].content + str,
-                  },
-                }))
-              }
-            />
+            <ToolBar handleClick={handleSignClick} />
           </ContentBox>
         </Layout>
       )}
