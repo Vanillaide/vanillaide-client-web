@@ -12,7 +12,7 @@ import { atomone } from "@uiw/codemirror-theme-atomone";
 import debounce from "../utils/debounce";
 import integrateCode from "../utils/integrateCode";
 
-import { DARK_BLUE_100 } from "../constants/color";
+import { WHITE } from "../constants/color";
 
 function selectLanguageExtension(string) {
   if (string === "html") return [html()];
@@ -110,7 +110,7 @@ const Container = styled.div`
 const ResultViewer = styled.iframe`
   width: 100%;
   height: 100%;
-  background: ${DARK_BLUE_100};
+  background: ${WHITE};
   border: none;
   outline: none;
 `;
