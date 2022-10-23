@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -27,6 +27,7 @@ export default function App() {
     },
   });
   const [isRunClicked, setIsRunClicked] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const selectedLanguageCode = code[selectedLanguage].content;
 
@@ -47,34 +48,58 @@ export default function App() {
     });
   };
 
+  const handleOnMessage = (ev) => {
+    const loadedCode = JSON.parse(ev.data);
+
+    setCode({
+      html: { content: loadedCode["html"], prev: null, next: null },
+      css: { content: loadedCode["css"], prev: null, next: null },
+      js: { content: loadedCode["js"], prev: null, next: null },
+    });
+
+    setIsLoaded(true);
+  };
+
+  useEffect(() => {
+    document.addEventListener("message", handleOnMessage);
+
+    return () => {
+      document.removeEventListener("message", handleOnMessage);
+    };
+  }, []);
+
   return (
-    <Layout>
-      <AppHeader>
-        <MenuWrapper>
-          <FontAwesomeIcon icon={faBars} className="function-icon" />
-        </MenuWrapper>
-        <FunctionHeader
-          code={code}
-          handleClick={setCode}
-          selectedLanguage={selectedLanguage}
-          handleRunClick={() => setIsRunClicked(true)}
-        />
-      </AppHeader>
-      <ContentBox>
-        <LanguageBar
-          selectedLanguage={selectedLanguage}
-          handlePress={handleLanguageClick}
-        />
-        <CodeArea
-          code={selectedLanguageCode}
-          wholeCode={code}
-          handleChange={setCode}
-          selectedLanguage={selectedLanguage}
-          isRunClicked={isRunClicked}
-        />
-        <ToolBar handleClick={handleSignClick} />
-      </ContentBox>
-    </Layout>
+    <>
+      {isLoaded && (
+        <Layout>
+          <AppHeader>
+            <MenuWrapper>
+              <FontAwesomeIcon icon={faBars} className="function-icon" />
+            </MenuWrapper>
+            <FunctionHeader
+              code={code}
+              handleClick={setCode}
+              selectedLanguage={selectedLanguage}
+              handleRunClick={() => setIsRunClicked(true)}
+            />
+          </AppHeader>
+          <ContentBox>
+            <LanguageBar
+              selectedLanguage={selectedLanguage}
+              handlePress={handleLanguageClick}
+            />
+            <CodeArea
+              code={selectedLanguageCode}
+              wholeCode={code}
+              handleChange={setCode}
+              selectedLanguage={selectedLanguage}
+              isRunClicked={isRunClicked}
+            />
+            <ToolBar handleClick={handleSignClick} />
+          </ContentBox>
+        </Layout>
+      )}
+    </>
   );
 }
 
