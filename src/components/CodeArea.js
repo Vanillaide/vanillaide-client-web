@@ -12,7 +12,7 @@ import { atomone } from "@uiw/codemirror-theme-atomone";
 import debounce from "../utils/debounce";
 import integrateCode from "../utils/integrateCode";
 
-import { WHITE } from "../constants/color";
+import { WHITE, DARK_BLUE_150 } from "../constants/color";
 
 function selectLanguageExtension(string) {
   if (string === "html") return [html()];
@@ -100,10 +100,13 @@ const Container = styled.div`
   flex: 14;
   width: 100%;
   height: 100%;
+  background: ${DARK_BLUE_150};
+  overflow: scroll;
 
   .editor {
     width: 100%;
     height: 100%;
+    outline: none;
   }
 `;
 
