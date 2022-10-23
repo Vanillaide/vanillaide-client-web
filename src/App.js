@@ -17,11 +17,10 @@ import ToolBar from "./components/ToolBar";
 export default function App() {
   const [selectedLanguage, setSelectedLanguage] = useState("html");
   const [code, setCode] = useState({
-    html: { content: "<h1>This is h1 element</h1>", prev: null, next: null },
-    css: { content: "h1 {\n color: red;\n}", prev: null, next: null },
+    html: { content: "", prev: null, next: null },
+    css: { content: "", prev: null, next: null },
     js: {
-      content:
-        'document.querySelector("h1").addEventListener("click", function () {\n  alert("clicked h1 element");\n});',
+      content: "",
       prev: null,
       next: null,
     },
@@ -30,6 +29,12 @@ export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const selectedLanguageCode = code[selectedLanguage].content;
+
+  const handleMenuClick = () => {
+    window.ReactNativeWebView.postMessage(
+      JSON.stringify({ method: "showMenu" }),
+    );
+  };
 
   const handleLanguageClick = (language) => {
     setIsRunClicked(false);
@@ -74,7 +79,11 @@ export default function App() {
         <Layout>
           <AppHeader>
             <MenuWrapper>
-              <FontAwesomeIcon icon={faBars} className="function-icon" />
+              <FontAwesomeIcon
+                icon={faBars}
+                className="function-icon"
+                onClick={handleMenuClick}
+              />
             </MenuWrapper>
             <FunctionHeader
               code={code}
