@@ -44,5 +44,6 @@ const Container = styled.div`
 `;
 
 const SignWrapper = styled.div`
+  padding: 10px;
   color: ${LIGHT_GREY_50};
 `;
