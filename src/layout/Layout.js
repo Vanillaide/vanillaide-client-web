@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-export default function Layout({ children }) {
+export default function Layout({ innerHeight, children }) {
   return (
-    <Container width={window.innerWidth} height={window.innerHeight}>
+    <Container width={window.innerWidth} height={innerHeight}>
       {children}
     </Container>
   );
@@ -11,6 +11,7 @@ export default function Layout({ children }) {
 
 Layout.propTypes = {
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.array]),
+  innerHeight: PropTypes.number.isRequired,
 };
 
 const Container = styled.div`

@@ -27,6 +27,7 @@ export default function App() {
   });
   const [isRunClicked, setIsRunClicked] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [innerHeight, setInnerHeight] = useState(window.innerHeight);
 
   const selectedLanguageCode = code[selectedLanguage].content;
 
@@ -65,18 +66,24 @@ export default function App() {
     setIsLoaded(true);
   };
 
+  const handleResize = () => {
+    setInnerHeight(window.innerHeight);
+  };
+
   useEffect(() => {
     document.addEventListener("message", handleOnMessage);
+    window.addEventListener("resize", handleResize);
 
     return () => {
       document.removeEventListener("message", handleOnMessage);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   return (
     <>
       {isLoaded && (
-        <Layout>
+        <Layout innerHeight={innerHeight}>
           <AppHeader>
             <MenuWrapper>
               <FontAwesomeIcon
@@ -103,6 +110,7 @@ export default function App() {
               handleChange={setCode}
               selectedLanguage={selectedLanguage}
               isRunClicked={isRunClicked}
+              innerHeight={innerHeight}
             />
             <ToolBar handleClick={handleSignClick} />
           </ContentBox>
