@@ -26,7 +26,7 @@ export default function CodeArea({
   handleChange,
   selectedLanguage,
   isRunClicked,
-  height,
+  innerHeight,
 }) {
   const [currentCode, setCurrentCode] = useState(code);
   const {
@@ -77,7 +77,7 @@ export default function CodeArea({
         <CodeMirror
           value={code}
           theme={atomone}
-          height={`${(height * 77) / 96}px`}
+          height={`${(innerHeight * 77) / 96}px`}
           extensions={selectLanguageExtension(selectedLanguage)}
           onBlur={handleBlur}
           onChange={handleCodeMirrorChange}
@@ -95,7 +95,7 @@ CodeArea.propTypes = {
   handleChange: PropTypes.func,
   selectedLanguage: PropTypes.string.isRequired,
   isRunClicked: PropTypes.bool.isRequired,
-  height: PropTypes.number,
+  innerHeight: PropTypes.number.isRequired,
 };
 
 const Container = styled.div`

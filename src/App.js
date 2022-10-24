@@ -27,6 +27,7 @@ export default function App() {
   });
   const [isRunClicked, setIsRunClicked] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [innerHeight, setInnerHeight] = useState(window.innerHeight);
 
   const selectedLanguageCode = code[selectedLanguage].content;
 
@@ -73,10 +74,8 @@ export default function App() {
     };
   }, []);
 
-  const [height, setHeight] = useState(window.innerHeight);
-
   const handleResize = () => {
-    setHeight(window.innerHeight);
+    setInnerHeight(window.innerHeight);
   };
 
   useEffect(() => {
@@ -90,7 +89,7 @@ export default function App() {
   return (
     <>
       {isLoaded && (
-        <Layout height={height}>
+        <Layout innerHeight={innerHeight}>
           <AppHeader>
             <MenuWrapper>
               <FontAwesomeIcon
@@ -117,7 +116,7 @@ export default function App() {
               handleChange={setCode}
               selectedLanguage={selectedLanguage}
               isRunClicked={isRunClicked}
-              height={height}
+              innerHeight={innerHeight}
             />
             <ToolBar handleClick={handleSignClick} />
           </ContentBox>
