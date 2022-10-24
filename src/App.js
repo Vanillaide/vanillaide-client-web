@@ -66,22 +66,16 @@ export default function App() {
     setIsLoaded(true);
   };
 
-  useEffect(() => {
-    document.addEventListener("message", handleOnMessage);
-
-    return () => {
-      document.removeEventListener("message", handleOnMessage);
-    };
-  }, []);
-
   const handleResize = () => {
     setInnerHeight(window.innerHeight);
   };
 
   useEffect(() => {
+    document.addEventListener("message", handleOnMessage);
     window.addEventListener("resize", handleResize);
 
     return () => {
+      document.removeEventListener("message", handleOnMessage);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
