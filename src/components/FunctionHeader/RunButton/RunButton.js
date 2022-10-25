@@ -9,6 +9,7 @@ export default function RunButton({ handleClick }) {
       icon={faPlay}
       className="function-icon"
       onClick={handleClick}
+      data-testid="runButton"
     />
   );
 }
