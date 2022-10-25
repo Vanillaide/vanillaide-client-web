@@ -2,6 +2,22 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import LanguageBar from "../../components/LanguageBar";
 
 describe("<LanguageBar />", () => {
+  it("Three languages are shown in the language bar", () => {
+    const selectedLanguage = "html";
+    const handlePress = jest.fn();
+
+    render(
+      <LanguageBar
+        selectedLanguage={selectedLanguage}
+        handlePress={handlePress}
+      />,
+    );
+
+    expect(screen.getByText("HTML")).toBeInTheDocument();
+    expect(screen.getByText("CSS")).toBeInTheDocument();
+    expect(screen.getByText("JS")).toBeInTheDocument();
+  });
+
   it("LanguageBar component should show correct color when target bar language is same with selectedLanguage", () => {
     const selectedLanguage = "css";
     const handlePress = jest.fn();
