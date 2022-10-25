@@ -3,20 +3,23 @@ import RedoButton from "../../components/FunctionHeader/RedoButton/RedoButton";
 
 describe("<RedoButton />", () => {
   it("HandleClick should work when next node of selected language code exists", () => {
+    const selectedLanguage = "html";
     const code = {
       html: {
         content: "html",
         prev: null,
-        next: {
-          html: { content: " next html", prev: null, next: null },
-          css: { content: "next css", prev: null, next: null },
-          js: { content: "next js", prev: null, next: null },
-        },
+        next: null,
       },
       css: { content: "css", prev: null, next: null },
       js: { content: "js", prev: null, next: null },
     };
-    const selectedLanguage = "html";
+
+    code[selectedLanguage].next = {
+      content: "next html",
+      prev: code.html,
+      next: null,
+    };
+
     const handleClick = jest.fn();
 
     render(
@@ -35,12 +38,17 @@ describe("<RedoButton />", () => {
   });
 
   it("HandleClick should not work when next node of selected language code doesn't exist", () => {
+    const selectedLanguage = "html";
     const code = {
-      html: { content: "html", prev: null, next: null },
+      html: {
+        content: "html",
+        prev: null,
+        next: null,
+      },
       css: { content: "css", prev: null, next: null },
       js: { content: "js", prev: null, next: null },
     };
-    const selectedLanguage = "html";
+
     const handleClick = jest.fn();
 
     render(
