@@ -19,6 +19,7 @@ export default function RedoButton({ code, handleClick, selectedLanguage }) {
       icon={faRotateRight}
       className="function-icon"
       onClick={handleRedoClick}
+      data-testid="redoButton"
     />
   );
 }
