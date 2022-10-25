@@ -13,11 +13,13 @@ export default function UndoButton({ code, handleClick, selectedLanguage }) {
       };
     });
   };
+
   return (
     <FontAwesomeIcon
       icon={faRotateLeft}
       className="function-icon"
       onClick={handleUndoClick}
+      data-testid="undoButton"
     />
   );
 }
