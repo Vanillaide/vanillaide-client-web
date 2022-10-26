@@ -10,8 +10,7 @@ export default function SaveButton({ code }) {
     js: { content: jsCode },
   } = code;
 
-  const handleClick = (ev) => {
-    ev.preventDefault();
+  const handleClick = () => {
     const contentOfCode = {
       html: htmlCode,
       css: cssCode,
