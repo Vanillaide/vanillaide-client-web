@@ -25,9 +25,22 @@ export default function App() {
       next: null,
     },
   });
+  const [view, setView] = useState({
+    html: null,
+    css: null,
+    js: null,
+  });
+  const [selection, setSelction] = useState({
+    html: null,
+    css: null,
+    js: null,
+  });
+
   const [isRunClicked, setIsRunClicked] = useState(false);
   // const [isLoaded, setIsLoaded] = useState(false);
   const [innerHeight, setInnerHeight] = useState(window.innerHeight);
+  const [prevCursor, setPrevCursor] = useState(0);
+  const [nextCursor, setNextCursor] = useState(0);
   const selectedLanguageCode = code[selectedLanguage].content;
 
   const handleMenuClick = () => {
@@ -42,15 +55,21 @@ export default function App() {
   };
 
   const handleSignClick = (sign) => {
-    setCode((prevState) => {
-      const currentContent = {
-        content: prevState[selectedLanguage].content + sign,
-        prev: prevState[selectedLanguage],
-        next: null,
-      };
-      prevState[selectedLanguage].next = currentContent;
-      return { ...prevState, [selectedLanguage]: currentContent };
-    });
+    const { anchor, head } = selection[selectedLanguage];
+    const currentView = view[selectedLanguage];
+    const from = anchor <= head ? anchor : head;
+    const to = anchor <= head ? head : anchor;
+    const changes = [
+      {
+        from,
+        to,
+        insert: sign,
+      },
+    ];
+    const nextAnchor = anchor <= head ? anchor : head;
+
+    currentView.dispatch({ changes, selection: { anchor: nextAnchor + 1 } });
+    currentView.focus();
   };
 
   const handleOnMessage = (ev) => {
@@ -67,6 +86,72 @@ export default function App() {
 
   const handleResize = () => {
     setInnerHeight(window.innerHeight);
+  };
+
+  const handleMoveUp = () => {
+    if (prevCursor < 0) return;
+
+    view[selectedLanguage].dispatch({
+      selection: {
+        head: prevCursor,
+        anchor: prevCursor,
+      },
+    });
+
+    view[selectedLanguage].focus();
+  };
+
+  const handleMoveDown = () => {
+    if (nextCursor < 0) return;
+
+    view[selectedLanguage].dispatch({
+      selection: {
+        head: nextCursor,
+        anchor: nextCursor,
+      },
+    });
+
+    view[selectedLanguage].focus();
+  };
+
+  const handleMoveLeft = () => {
+    const { head } = view[selectedLanguage].state.selection.ranges[0];
+    const currentHead = head;
+    let movedLeft = currentHead - 1;
+
+    if (movedLeft < 0) {
+      movedLeft = currentHead;
+    }
+
+    view[selectedLanguage].dispatch({
+      selection: {
+        head: movedLeft,
+        anchor: movedLeft,
+      },
+    });
+
+    view[selectedLanguage].focus();
+  };
+
+  const handleMoveRight = () => {
+    const { head } = view[selectedLanguage].state.selection.ranges[0];
+    const currentHead = head;
+    let movedRight = currentHead + 1;
+
+    const { doc } = view[selectedLanguage].state;
+
+    if (movedRight > doc.toString().length) {
+      movedRight = currentHead;
+    }
+
+    view[selectedLanguage].dispatch({
+      selection: {
+        head: movedRight,
+        anchor: movedRight,
+      },
+    });
+
+    view[selectedLanguage].focus();
   };
 
   useEffect(() => {
@@ -106,12 +191,21 @@ export default function App() {
           <CodeArea
             code={selectedLanguageCode}
             wholeCode={code}
+            selection={selection}
             handleChange={setCode}
+            handleUpdate={setSelction}
+            handleCreateEditor={setView}
             selectedLanguage={selectedLanguage}
             isRunClicked={isRunClicked}
             innerHeight={innerHeight}
+            setPrevCursor={setPrevCursor}
+            setNextCursor={setNextCursor}
           />
           <ToolBar handleClick={handleSignClick} />
+          <button onClick={handleMoveUp}>Up</button>
+          <button onClick={handleMoveDown}>Down</button>
+          <button onClick={handleMoveLeft}>Left</button>
+          <button onClick={handleMoveRight}>Right</button>
         </ContentBox>
       </Layout>
       {/* )} */}
