@@ -8,7 +8,7 @@ import MoveDownButton from "./MoveDownButton/MoveDownButton";
 import MoveLeftButton from "./MoveLeftButton/MoveLeftButton";
 import MoveRightButton from "./MoveRightButton/MoveRightButton";
 
-export default function MoveCursorButton({
+export default function MoveCursorButtons({
   handleMoveUp,
   handleMoveDown,
   handleMoveLeft,
@@ -24,7 +24,7 @@ export default function MoveCursorButton({
   );
 }
 
-MoveCursorButton.propTypes = {
+MoveCursorButtons.propTypes = {
   handleMoveUp: PropTypes.func.isRequired,
   handleMoveDown: PropTypes.func.isRequired,
   handleMoveLeft: PropTypes.func.isRequired,
@@ -32,33 +32,31 @@ MoveCursorButton.propTypes = {
 };
 
 const Container = styled.div`
-  position: fixed;
-  height: 100%;
-  z-index: 1;
+  min-height: 100%;
 
   .cursor-icon {
     position: absolute;
-    font-size: 20px;
+    font-size: 35px;
     color: ${LIGHT_GREY_50};
   }
 
   .up {
-    top: 75%;
-    left: 86vw;
+    top: 70%;
+    left: 78vw;
   }
 
   .down {
-    top: 81%;
-    left: 86vw;
+    top: 80%;
+    left: 78vw;
   }
 
   .left {
-    top: 78%;
-    left: 80vw;
+    top: 75%;
+    left: 66vw;
   }
 
   .right {
-    top: 78%;
-    left: 92vw;
+    top: 75%;
+    left: 89vw;
   }
 `;

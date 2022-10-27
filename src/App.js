@@ -13,7 +13,7 @@ import LanguageBar from "./components/LanguageBar";
 import CodeArea from "./components/CodeArea";
 import FunctionHeader from "./components/FunctionHeader/FunctionHeader";
 import ToolBar from "./components/ToolBar";
-import MoveCursorButton from "./components/MoveCursorButton/MoveCursorButton";
+import MoveCursorButtons from "./components/MoveCursorButtons/MoveCursorButtons";
 
 export default function App() {
   const [selectedLanguage, setSelectedLanguage] = useState("html");
@@ -203,12 +203,14 @@ export default function App() {
               setNextCursor={setNextCursor}
             />
             <ToolBar handleClick={handleSignClick} />
-            <MoveCursorButton
-              handleMoveUp={handleMoveUp}
-              handleMoveDown={handleMoveDown}
-              handleMoveLeft={handleMoveLeft}
-              handleMoveRight={handleMoveRight}
-            />
+            <ButtonWrapper>
+              <MoveCursorButtons
+                handleMoveUp={handleMoveUp}
+                handleMoveDown={handleMoveDown}
+                handleMoveLeft={handleMoveLeft}
+                handleMoveRight={handleMoveRight}
+              />
+            </ButtonWrapper>
           </ContentBox>
         </Layout>
       )}
@@ -222,4 +224,11 @@ const MenuWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   padding-left: 20px;
+`;
+
+const ButtonWrapper = styled.div`
+  position: fixed;
+  z-index: 1;
+  height: 100vh;
+  margin: -20px;
 `;

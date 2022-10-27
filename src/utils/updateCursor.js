@@ -45,8 +45,15 @@ function updateNextCursor(viewUpdate, doc, head, setNextCursor) {
   const nextLineLength = viewportLines[lineNumber + 1]
     ? viewportLines[lineNumber + 1].length
     : null;
+  const nextCursor = viewportLines[lineNumber + 1]
+    ? viewportLines[lineNumber + 1].from
+    : null;
 
-  if (!nextLineLength) {
+  if (nextLineLength === 0) {
+    return setNextCursor(nextCursor);
+  }
+
+  if (nextLineLength === null) {
     return setNextCursor(currentHead);
   }
 
