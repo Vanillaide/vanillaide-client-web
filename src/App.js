@@ -99,7 +99,7 @@ export default function App() {
 
   return (
     <>
-      {!isLoaded && (
+      {isLoaded && (
         <Layout innerHeight={innerHeight}>
           <AppHeader>
             <MenuWrapper>
