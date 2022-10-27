@@ -26,9 +26,8 @@ export default function App() {
     },
   });
   const [isRunClicked, setIsRunClicked] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
+  // const [isLoaded, setIsLoaded] = useState(false);
   const [innerHeight, setInnerHeight] = useState(window.innerHeight);
-
   const selectedLanguageCode = code[selectedLanguage].content;
 
   const handleMenuClick = () => {
@@ -82,40 +81,40 @@ export default function App() {
 
   return (
     <>
-      {isLoaded && (
-        <Layout innerHeight={innerHeight}>
-          <AppHeader>
-            <MenuWrapper>
-              <FontAwesomeIcon
-                icon={faBars}
-                className="function-icon"
-                onClick={handleMenuClick}
-              />
-            </MenuWrapper>
-            <FunctionHeader
-              code={code}
-              handleClick={setCode}
-              selectedLanguage={selectedLanguage}
-              handleRunClick={() => setIsRunClicked(true)}
+      {/* {isLoaded && ( */}
+      <Layout innerHeight={innerHeight}>
+        <AppHeader>
+          <MenuWrapper>
+            <FontAwesomeIcon
+              icon={faBars}
+              className="function-icon"
+              onClick={handleMenuClick}
             />
-          </AppHeader>
-          <ContentBox>
-            <LanguageBar
-              selectedLanguage={selectedLanguage}
-              handlePress={handleLanguageClick}
-            />
-            <CodeArea
-              code={selectedLanguageCode}
-              wholeCode={code}
-              handleChange={setCode}
-              selectedLanguage={selectedLanguage}
-              isRunClicked={isRunClicked}
-              innerHeight={innerHeight}
-            />
-            <ToolBar handleClick={handleSignClick} />
-          </ContentBox>
-        </Layout>
-      )}
+          </MenuWrapper>
+          <FunctionHeader
+            code={code}
+            handleClick={setCode}
+            selectedLanguage={selectedLanguage}
+            handleRunClick={() => setIsRunClicked(true)}
+          />
+        </AppHeader>
+        <ContentBox>
+          <LanguageBar
+            selectedLanguage={selectedLanguage}
+            handlePress={handleLanguageClick}
+          />
+          <CodeArea
+            code={selectedLanguageCode}
+            wholeCode={code}
+            handleChange={setCode}
+            selectedLanguage={selectedLanguage}
+            isRunClicked={isRunClicked}
+            innerHeight={innerHeight}
+          />
+          <ToolBar handleClick={handleSignClick} />
+        </ContentBox>
+      </Layout>
+      {/* )} */}
     </>
   );
 }
