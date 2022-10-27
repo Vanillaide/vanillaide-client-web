@@ -25,6 +25,17 @@ export default function App() {
       next: null,
     },
   });
+  const [view, setView] = useState({
+    html: null,
+    css: null,
+    js: null,
+  });
+  const [selection, setSelction] = useState({
+    html: null,
+    css: null,
+    js: null,
+  });
+
   const [isRunClicked, setIsRunClicked] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [innerHeight, setInnerHeight] = useState(window.innerHeight);
@@ -43,15 +54,21 @@ export default function App() {
   };
 
   const handleSignClick = (sign) => {
-    setCode((prevState) => {
-      const currentContent = {
-        content: prevState[selectedLanguage].content + sign,
-        prev: prevState[selectedLanguage],
-        next: null,
-      };
-      prevState[selectedLanguage].next = currentContent;
-      return { ...prevState, [selectedLanguage]: currentContent };
-    });
+    const { anchor, head } = selection[selectedLanguage];
+    const currentView = view[selectedLanguage];
+    const from = anchor <= head ? anchor : head;
+    const to = anchor <= head ? head : anchor;
+    const changes = [
+      {
+        from,
+        to,
+        insert: sign,
+      },
+    ];
+    const nextAnchor = anchor <= head ? anchor : head;
+
+    currentView.dispatch({ changes, selection: { anchor: nextAnchor + 1 } });
+    currentView.focus();
   };
 
   const handleOnMessage = (ev) => {
@@ -107,7 +124,10 @@ export default function App() {
             <CodeArea
               code={selectedLanguageCode}
               wholeCode={code}
+              selection={selection}
               handleChange={setCode}
+              handleUpdate={setSelction}
+              handleCreateEditor={setView}
               selectedLanguage={selectedLanguage}
               isRunClicked={isRunClicked}
               innerHeight={innerHeight}
