@@ -13,6 +13,7 @@ import LanguageBar from "./components/LanguageBar";
 import CodeArea from "./components/CodeArea";
 import FunctionHeader from "./components/FunctionHeader/FunctionHeader";
 import ToolBar from "./components/ToolBar";
+import MoveCursorButton from "./components/MoveCursorButton/MoveCursorButton";
 
 export default function App() {
   const [selectedLanguage, setSelectedLanguage] = useState("html");
@@ -37,7 +38,7 @@ export default function App() {
   });
 
   const [isRunClicked, setIsRunClicked] = useState(false);
-  // const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [innerHeight, setInnerHeight] = useState(window.innerHeight);
   const [prevCursor, setPrevCursor] = useState(0);
   const [nextCursor, setNextCursor] = useState(0);
@@ -166,49 +167,51 @@ export default function App() {
 
   return (
     <>
-      {/* {isLoaded && ( */}
-      <Layout innerHeight={innerHeight}>
-        <AppHeader>
-          <MenuWrapper>
-            <FontAwesomeIcon
-              icon={faBars}
-              className="function-icon"
-              onClick={handleMenuClick}
+      {isLoaded && (
+        <Layout innerHeight={innerHeight}>
+          <AppHeader>
+            <MenuWrapper>
+              <FontAwesomeIcon
+                icon={faBars}
+                className="function-icon"
+                onClick={handleMenuClick}
+              />
+            </MenuWrapper>
+            <FunctionHeader
+              code={code}
+              handleClick={setCode}
+              selectedLanguage={selectedLanguage}
+              handleRunClick={() => setIsRunClicked(true)}
             />
-          </MenuWrapper>
-          <FunctionHeader
-            code={code}
-            handleClick={setCode}
-            selectedLanguage={selectedLanguage}
-            handleRunClick={() => setIsRunClicked(true)}
-          />
-        </AppHeader>
-        <ContentBox>
-          <LanguageBar
-            selectedLanguage={selectedLanguage}
-            handlePress={handleLanguageClick}
-          />
-          <CodeArea
-            code={selectedLanguageCode}
-            wholeCode={code}
-            selection={selection}
-            handleChange={setCode}
-            handleUpdate={setSelction}
-            handleCreateEditor={setView}
-            selectedLanguage={selectedLanguage}
-            isRunClicked={isRunClicked}
-            innerHeight={innerHeight}
-            setPrevCursor={setPrevCursor}
-            setNextCursor={setNextCursor}
-          />
-          <ToolBar handleClick={handleSignClick} />
-          <button onClick={handleMoveUp}>Up</button>
-          <button onClick={handleMoveDown}>Down</button>
-          <button onClick={handleMoveLeft}>Left</button>
-          <button onClick={handleMoveRight}>Right</button>
-        </ContentBox>
-      </Layout>
-      {/* )} */}
+          </AppHeader>
+          <ContentBox>
+            <LanguageBar
+              selectedLanguage={selectedLanguage}
+              handlePress={handleLanguageClick}
+            />
+            <CodeArea
+              code={selectedLanguageCode}
+              wholeCode={code}
+              selection={selection}
+              handleChange={setCode}
+              handleUpdate={setSelction}
+              handleCreateEditor={setView}
+              selectedLanguage={selectedLanguage}
+              isRunClicked={isRunClicked}
+              innerHeight={innerHeight}
+              setPrevCursor={setPrevCursor}
+              setNextCursor={setNextCursor}
+            />
+            <ToolBar handleClick={handleSignClick} />
+            <MoveCursorButton
+              handleMoveUp={handleMoveUp}
+              handleMoveDown={handleMoveDown}
+              handleMoveLeft={handleMoveLeft}
+              handleMoveRight={handleMoveRight}
+            />
+          </ContentBox>
+        </Layout>
+      )}
     </>
   );
 }

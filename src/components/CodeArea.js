@@ -12,7 +12,7 @@ import { atomone } from "@uiw/codemirror-theme-atomone";
 import debounce from "../utils/debounce";
 import integrateCode from "../utils/integrateCode";
 
-import { updatePrevCursor, updateNextCursor } from "../utils/updateCursor";
+// import { updatePrevCursor, updateNextCursor } from "../utils/updateCursor";
 import { WHITE, DARK_BLUE_150 } from "../constants/color";
 
 function selectLanguageExtension(string) {
@@ -31,8 +31,8 @@ export default function CodeArea({
   selectedLanguage,
   isRunClicked,
   innerHeight,
-  setPrevCursor,
-  setNextCursor,
+  // setPrevCursor,
+  // setNextCursor,
 }) {
   const [currentCode, setCurrentCode] = useState(code);
   const {
@@ -71,7 +71,7 @@ export default function CodeArea({
 
   const handleViewUpdate = (viewUpdate) => {
     const { head, anchor } = viewUpdate.state.selection.ranges[0];
-    const { doc } = viewUpdate.state;
+    // const { doc } = viewUpdate.state;
 
     const update = { head, anchor };
 
@@ -84,8 +84,8 @@ export default function CodeArea({
       });
     }
 
-    updatePrevCursor(viewUpdate, doc, head, setPrevCursor);
-    updateNextCursor(viewUpdate, doc, head, setNextCursor);
+    // updatePrevCursor(viewUpdate, doc, head, setPrevCursor);
+    // updateNextCursor(viewUpdate, doc, head, setNextCursor);
   };
 
   const handleEachCreateEditor = (view) => {
