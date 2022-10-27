@@ -23,7 +23,10 @@ function selectLanguageExtension(string) {
 export default function CodeArea({
   code,
   wholeCode,
+  selection,
   handleChange,
+  handleUpdate,
+  handleCreateEditor,
   selectedLanguage,
   isRunClicked,
   innerHeight,
@@ -53,14 +56,35 @@ export default function CodeArea({
     });
   };
 
+  const handleBlur = () => {
+    saveContentDebounce(currentCode, code, selectedLanguage, 0);
+  };
+
   const handleKeyUp = (ev) => {
     if (ev.code === "Enter" || ev.code === "Space" || ev.code === "Tab") {
       saveContentDebounce(currentCode, code, selectedLanguage, 0);
     }
   };
 
-  const handleBlur = () => {
-    saveContentDebounce(currentCode, code, selectedLanguage, 0);
+  const handleViewUpdate = (viewUpdate) => {
+    const { head, anchor } = viewUpdate.state.selection.ranges[0];
+
+    const update = { head, anchor };
+
+    if (
+      selection[selectedLanguage]?.head !== head ||
+      selection[selectedLanguage]?.anchor !== anchor
+    ) {
+      handleUpdate((prevState) => {
+        return { ...prevState, [selectedLanguage]: update };
+      });
+    }
+  };
+
+  const handleEachCreateEditor = (view) => {
+    handleCreateEditor((prevState) => {
+      return { ...prevState, [selectedLanguage]: view };
+    });
   };
 
   const handleCodeMirrorChange = (value) => {
@@ -74,16 +98,50 @@ export default function CodeArea({
       {isRunClicked ? (
         <ResultViewer srcDoc={integrateCode(htmlCode, cssCode, jsCode)} />
       ) : (
-        <CodeMirror
-          value={code}
-          theme={atomone}
-          height={`${(innerHeight * 77) / 96}px`}
-          extensions={selectLanguageExtension(selectedLanguage)}
-          onBlur={handleBlur}
-          onChange={handleCodeMirrorChange}
-          onKeyUp={handleKeyUp}
-          className="editor"
-        />
+        <>
+          {selectedLanguage === "html" && (
+            <CodeMirror
+              value={code}
+              theme={atomone}
+              height={`${(innerHeight * 77) / 96}px`}
+              extensions={selectLanguageExtension(selectedLanguage)}
+              onBlur={handleBlur}
+              onChange={handleCodeMirrorChange}
+              onKeyUp={handleKeyUp}
+              onUpdate={handleViewUpdate}
+              onCreateEditor={handleEachCreateEditor}
+              className="editor"
+            />
+          )}
+          {selectedLanguage === "css" && (
+            <CodeMirror
+              value={code}
+              theme={atomone}
+              height={`${(innerHeight * 77) / 96}px`}
+              extensions={selectLanguageExtension(selectedLanguage)}
+              onBlur={handleBlur}
+              onChange={handleCodeMirrorChange}
+              onKeyUp={handleKeyUp}
+              onUpdate={handleViewUpdate}
+              onCreateEditor={handleEachCreateEditor}
+              className="editor"
+            />
+          )}
+          {selectedLanguage === "js" && (
+            <CodeMirror
+              value={code}
+              theme={atomone}
+              height={`${(innerHeight * 77) / 96}px`}
+              extensions={selectLanguageExtension(selectedLanguage)}
+              onBlur={handleBlur}
+              onChange={handleCodeMirrorChange}
+              onKeyUp={handleKeyUp}
+              onUpdate={handleViewUpdate}
+              onCreateEditor={handleEachCreateEditor}
+              className="editor"
+            />
+          )}
+        </>
       )}
     </Container>
   );
@@ -92,7 +150,10 @@ export default function CodeArea({
 CodeArea.propTypes = {
   code: PropTypes.string,
   wholeCode: PropTypes.object.isRequired,
+  selection: PropTypes.object,
   handleChange: PropTypes.func,
+  handleUpdate: PropTypes.func,
+  handleCreateEditor: PropTypes.func,
   selectedLanguage: PropTypes.string.isRequired,
   isRunClicked: PropTypes.bool.isRequired,
   innerHeight: PropTypes.number.isRequired,
