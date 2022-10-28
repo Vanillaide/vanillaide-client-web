@@ -3,14 +3,27 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 
-export default function UndoButton({ code, handleClick, selectedLanguage }) {
+export default function UndoButton({
+  code,
+  handleClick,
+  selectedLanguage,
+  handleUndoRedoClick,
+  view,
+}) {
   const handleUndoClick = () => {
+    view.focus();
     if (!code[selectedLanguage].prev) return;
     handleClick((prevState) => {
       return {
         ...prevState,
         [selectedLanguage]: prevState[selectedLanguage].prev,
       };
+    });
+
+    const { anchor, head } = code[selectedLanguage].prev;
+
+    handleUndoRedoClick((prevState) => {
+      return { ...prevState, [selectedLanguage]: { anchor, head } };
     });
   };
 
@@ -28,4 +41,6 @@ UndoButton.propTypes = {
   code: PropTypes.object.isRequired,
   handleClick: PropTypes.func.isRequired,
   selectedLanguage: PropTypes.string.isRequired,
+  handleUndoRedoClick: PropTypes.func,
+  view: PropTypes.object,
 };

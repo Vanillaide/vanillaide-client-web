@@ -17,13 +17,9 @@ import ToolBar from "./components/ToolBar";
 export default function App() {
   const [selectedLanguage, setSelectedLanguage] = useState("html");
   const [code, setCode] = useState({
-    html: { content: "", prev: null, next: null },
-    css: { content: "", prev: null, next: null },
-    js: {
-      content: "",
-      prev: null,
-      next: null,
-    },
+    html: { content: "", anchor: 0, head: 0, prev: null, next: null },
+    css: { content: "", anchor: 0, head: 0, prev: null, next: null },
+    js: { content: "", anchor: 0, head: 0, prev: null, next: null },
   });
   const [view, setView] = useState({
     html: null,
@@ -65,9 +61,17 @@ export default function App() {
         insert: sign,
       },
     ];
+
     const nextAnchor = anchor <= head ? anchor : head;
 
     currentView.dispatch({ changes, selection: { anchor: nextAnchor + 1 } });
+
+    // setCode((prevState) => {
+    //   prevState[selectedLanguage].anchor = from;
+    //   prevState[selectedLanguage].head = from;
+    //   return prevState;
+    // });
+
     currentView.focus();
   };
 
@@ -75,9 +79,27 @@ export default function App() {
     const loadedCode = JSON.parse(ev.data);
 
     setCode({
-      html: { content: loadedCode["html"], prev: null, next: null },
-      css: { content: loadedCode["css"], prev: null, next: null },
-      js: { content: loadedCode["js"], prev: null, next: null },
+      html: {
+        content: loadedCode["html"],
+        anchor: 0,
+        head: 0,
+        prev: null,
+        next: null,
+      },
+      css: {
+        content: loadedCode["css"],
+        anchor: 0,
+        head: 0,
+        prev: null,
+        next: null,
+      },
+      js: {
+        content: loadedCode["js"],
+        anchor: 0,
+        head: 0,
+        prev: null,
+        next: null,
+      },
     });
 
     setIsLoaded(true);
@@ -97,9 +119,18 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (view[selectedLanguage]) {
+      view[selectedLanguage].dispatch({
+        selection: selection[selectedLanguage],
+      });
+      view[selectedLanguage].focus();
+    }
+  }, [code]);
+
   return (
     <>
-      {isLoaded && (
+      {!isLoaded && (
         <Layout innerHeight={innerHeight}>
           <AppHeader>
             <MenuWrapper>
@@ -114,6 +145,8 @@ export default function App() {
               handleClick={setCode}
               selectedLanguage={selectedLanguage}
               handleRunClick={() => setIsRunClicked(true)}
+              handleUndoRedoClick={setSelction}
+              view={view[selectedLanguage]}
             />
           </AppHeader>
           <ContentBox>

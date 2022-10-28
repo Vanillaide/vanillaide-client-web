@@ -31,19 +31,32 @@ export default function CodeArea({
   isRunClicked,
   innerHeight,
 }) {
-  const [currentCode, setCurrentCode] = useState(code);
+  const [currentCode, setCurrentCode] = useState({
+    html: wholeCode.html.content,
+    css: wholeCode.css.content,
+    js: wholeCode.js.content,
+  });
   const {
     html: { content: htmlCode },
     css: { content: cssCode },
     js: { content: jsCode },
   } = wholeCode;
 
-  const saveContent = (text, prevText, language) => {
+  const [isTrans, setIsTrans] = useState({
+    html: false,
+    css: false,
+    js: false,
+  });
+
+  const saveContent = (text, prevText, language, currentSelection) => {
     if (text === prevText) return;
 
     handleChange((prevState) => {
+      const { anchor, head } = currentSelection;
       const currentContent = {
         content: text,
+        anchor: anchor,
+        head: head,
         prev: prevState[language],
         next: null,
       };
@@ -54,16 +67,19 @@ export default function CodeArea({
         [language]: currentContent,
       };
     });
+    setIsTrans((prevState) => {
+      return { ...prevState, [selectedLanguage]: false };
+    });
   };
 
   const handleBlur = () => {
-    saveContentDebounce(currentCode, code, selectedLanguage, 0);
-  };
-
-  const handleKeyUp = (ev) => {
-    if (ev.code === "Enter" || ev.code === "Space" || ev.code === "Tab") {
-      saveContentDebounce(currentCode, code, selectedLanguage, 0);
-    }
+    saveContentDebounce(
+      currentCode[selectedLanguage],
+      code,
+      selectedLanguage,
+      selection[selectedLanguage],
+      0,
+    );
   };
 
   const handleViewUpdate = (viewUpdate) => {
@@ -87,9 +103,27 @@ export default function CodeArea({
     });
   };
 
-  const handleCodeMirrorChange = (value) => {
-    setCurrentCode(value);
-    saveContentDebounce(value, code, selectedLanguage, 1000);
+  const handleCodeMirrorChange = (value, viewUpdate) => {
+    if (!isTrans[selectedLanguage]) {
+      const { anchor, head } = selection[selectedLanguage];
+
+      handleChange((prevState) => {
+        prevState[selectedLanguage].anchor = anchor;
+        prevState[selectedLanguage].head = head;
+        return prevState;
+      });
+      setIsTrans((prevState) => {
+        return { ...prevState, [selectedLanguage]: true };
+      });
+    }
+
+    setCurrentCode((prevState) => {
+      return { ...prevState, [selectedLanguage]: value };
+    });
+
+    const { anchor, head } = viewUpdate.state.selection.ranges[0];
+    const currentSelection = { anchor, head };
+    saveContentDebounce(value, code, selectedLanguage, currentSelection, 1000);
   };
 
   const saveContentDebounce = useCallback(debounce(saveContent), []);
@@ -107,7 +141,6 @@ export default function CodeArea({
               extensions={selectLanguageExtension(selectedLanguage)}
               onBlur={handleBlur}
               onChange={handleCodeMirrorChange}
-              onKeyUp={handleKeyUp}
               onUpdate={handleViewUpdate}
               onCreateEditor={handleEachCreateEditor}
               className="editor"
@@ -121,7 +154,6 @@ export default function CodeArea({
               extensions={selectLanguageExtension(selectedLanguage)}
               onBlur={handleBlur}
               onChange={handleCodeMirrorChange}
-              onKeyUp={handleKeyUp}
               onUpdate={handleViewUpdate}
               onCreateEditor={handleEachCreateEditor}
               className="editor"
@@ -135,7 +167,6 @@ export default function CodeArea({
               extensions={selectLanguageExtension(selectedLanguage)}
               onBlur={handleBlur}
               onChange={handleCodeMirrorChange}
-              onKeyUp={handleKeyUp}
               onUpdate={handleViewUpdate}
               onCreateEditor={handleEachCreateEditor}
               className="editor"

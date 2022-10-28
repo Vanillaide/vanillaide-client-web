@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@codemirror/history": "^0.19.2",
     "@codemirror/lang-css": "^6.0.0",
     "@codemirror/lang-html": "^6.1.2",
     "@codemirror/lang-javascript": "^6.1.0",
