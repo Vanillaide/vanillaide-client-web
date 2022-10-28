@@ -11,6 +11,8 @@ export default function FunctionHeader({
   handleClick,
   selectedLanguage,
   handleRunClick,
+  handleUndoRedoClick,
+  view,
 }) {
   return (
     <Container>
@@ -19,11 +21,15 @@ export default function FunctionHeader({
         code={code}
         handleClick={handleClick}
         selectedLanguage={selectedLanguage}
+        handleUndoRedoClick={handleUndoRedoClick}
+        view={view}
       />
       <RedoButton
         code={code}
         handleClick={handleClick}
         selectedLanguage={selectedLanguage}
+        handleUndoRedoClick={handleUndoRedoClick}
+        view={view}
       />
       <SaveButton code={code} />
     </Container>
@@ -35,6 +41,8 @@ FunctionHeader.propTypes = {
   handleClick: PropTypes.func.isRequired,
   selectedLanguage: PropTypes.string.isRequired,
   handleRunClick: PropTypes.func.isRequired,
+  handleUndoRedoClick: PropTypes.func.isRequired,
+  view: PropTypes.object,
 };
 
 const Container = styled.div`
