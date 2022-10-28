@@ -89,7 +89,7 @@ export default function App() {
     setInnerHeight(window.innerHeight);
   };
 
-  const handleMoveUp = () => {
+  const handleMoveUpClick = () => {
     if (prevCursor < 0) return;
 
     view[selectedLanguage].dispatch({
@@ -102,7 +102,7 @@ export default function App() {
     view[selectedLanguage].focus();
   };
 
-  const handleMoveDown = () => {
+  const handleMoveDownClick = () => {
     if (nextCursor < 0) return;
 
     view[selectedLanguage].dispatch({
@@ -115,40 +115,29 @@ export default function App() {
     view[selectedLanguage].focus();
   };
 
-  const handleMoveLeft = () => {
+  const handleMoveLeftClick = () => {
     const { head } = view[selectedLanguage].state.selection.ranges[0];
-    const currentHead = head;
-    let movedLeft = currentHead - 1;
-
-    if (movedLeft < 0) {
-      movedLeft = currentHead;
-    }
+    const targetHead = head - 1 < 0 ? head : head - 1;
 
     view[selectedLanguage].dispatch({
       selection: {
-        head: movedLeft,
-        anchor: movedLeft,
+        head: targetHead,
+        anchor: targetHead,
       },
     });
 
     view[selectedLanguage].focus();
   };
 
-  const handleMoveRight = () => {
+  const handleMoveRightClick = () => {
     const { head } = view[selectedLanguage].state.selection.ranges[0];
-    const currentHead = head;
-    let movedRight = currentHead + 1;
-
     const { doc } = view[selectedLanguage].state;
-
-    if (movedRight > doc.toString().length) {
-      movedRight = currentHead;
-    }
+    const targetHead = head + 1 > doc.toString().length ? head : head + 1;
 
     view[selectedLanguage].dispatch({
       selection: {
-        head: movedRight,
-        anchor: movedRight,
+        head: targetHead,
+        anchor: targetHead,
       },
     });
 
@@ -205,10 +194,10 @@ export default function App() {
             <ToolBar handleClick={handleSignClick} />
             <ButtonWrapper>
               <MoveCursorButtons
-                handleMoveUp={handleMoveUp}
-                handleMoveDown={handleMoveDown}
-                handleMoveLeft={handleMoveLeft}
-                handleMoveRight={handleMoveRight}
+                handleMoveUpClick={handleMoveUpClick}
+                handleMoveDownClick={handleMoveDownClick}
+                handleMoveLeftClick={handleMoveLeftClick}
+                handleMoveRightClick={handleMoveRightClick}
               />
             </ButtonWrapper>
           </ContentBox>

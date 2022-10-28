@@ -9,26 +9,26 @@ import MoveLeftButton from "./MoveLeftButton/MoveLeftButton";
 import MoveRightButton from "./MoveRightButton/MoveRightButton";
 
 export default function MoveCursorButtons({
-  handleMoveUp,
-  handleMoveDown,
-  handleMoveLeft,
-  handleMoveRight,
+  handleMoveUpClick,
+  handleMoveDownClick,
+  handleMoveLeftClick,
+  handleMoveRightClick,
 }) {
   return (
     <Container>
-      <MoveUpButton handleClick={handleMoveUp} />
-      <MoveDownButton handleClick={handleMoveDown} />
-      <MoveLeftButton handleClick={handleMoveLeft} />
-      <MoveRightButton handleClick={handleMoveRight} />
+      <MoveUpButton handleClick={handleMoveUpClick} />
+      <MoveDownButton handleClick={handleMoveDownClick} />
+      <MoveLeftButton handleClick={handleMoveLeftClick} />
+      <MoveRightButton handleClick={handleMoveRightClick} />
     </Container>
   );
 }
 
 MoveCursorButtons.propTypes = {
-  handleMoveUp: PropTypes.func.isRequired,
-  handleMoveDown: PropTypes.func.isRequired,
-  handleMoveLeft: PropTypes.func.isRequired,
-  handleMoveRight: PropTypes.func.isRequired,
+  handleMoveUpClick: PropTypes.func.isRequired,
+  handleMoveDownClick: PropTypes.func.isRequired,
+  handleMoveLeftClick: PropTypes.func.isRequired,
+  handleMoveRightClick: PropTypes.func.isRequired,
 };
 
 const Container = styled.div`

@@ -3,14 +3,15 @@ function updatePrevCursor(viewUpdate, doc, head, handlePrevCursor) {
   let lineNumber = 0;
   let prevEndHead = 0;
   const currentHead = head;
+  const docToString = doc.toString();
 
   while (
-    doc.toString().indexOf("\n", initialCursor) < currentHead &&
-    doc.toString().indexOf("\n", initialCursor) !== -1
+    docToString.indexOf("\n", initialCursor) < currentHead &&
+    docToString.indexOf("\n", initialCursor) !== -1
   ) {
-    initialCursor = doc.toString().indexOf("\n", initialCursor) + 1;
+    initialCursor = docToString.indexOf("\n", initialCursor) + 1;
     lineNumber += 1;
-    prevEndHead = doc.toString().indexOf("\n", initialCursor - 1);
+    prevEndHead = docToString.indexOf("\n", initialCursor - 1);
   }
 
   if (lineNumber - 1 < 0) return;
@@ -31,17 +32,18 @@ function updateNextCursor(viewUpdate, doc, head, handleNextCursor) {
   let initialCursor = 0;
   let lineNumber = 0;
   const currentHead = head;
+  const docToString = doc.toString();
 
   while (
-    doc.toString().indexOf("\n", initialCursor) < currentHead &&
-    doc.toString().indexOf("\n", initialCursor) !== -1
+    docToString.indexOf("\n", initialCursor) < currentHead &&
+    docToString.indexOf("\n", initialCursor) !== -1
   ) {
     initialCursor = doc.toString().indexOf("\n", initialCursor) + 1;
     lineNumber += 1;
   }
 
   const { viewportLines } = viewUpdate.view.viewState;
-  const currentLineLength = viewportLines[lineNumber].length + 1;
+  const currentLineLength = viewportLines[lineNumber].length;
   const nextLineLength = viewportLines[lineNumber + 1]
     ? viewportLines[lineNumber + 1].length
     : null;
@@ -57,7 +59,7 @@ function updateNextCursor(viewUpdate, doc, head, handleNextCursor) {
     return handleNextCursor(currentHead);
   }
 
-  return handleNextCursor(currentHead + currentLineLength);
+  return handleNextCursor(currentHead + currentLineLength) + 1;
 }
 
 export { updatePrevCursor, updateNextCursor };
