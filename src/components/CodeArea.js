@@ -45,7 +45,7 @@ export default function CodeArea({
     js: { content: jsCode },
   } = wholeCode;
 
-  const [isTrans, setIsTrans] = useState({
+  const [isWriting, setIsWriting] = useState({
     html: false,
     css: false,
     js: false,
@@ -70,7 +70,7 @@ export default function CodeArea({
         [language]: currentContent,
       };
     });
-    setIsTrans((prevState) => {
+    setIsWriting((prevState) => {
       return { ...prevState, [selectedLanguage]: false };
     });
   };
@@ -133,7 +133,7 @@ export default function CodeArea({
   };
 
   const handleCodeMirrorChange = (value, viewUpdate) => {
-    if (!isTrans[selectedLanguage]) {
+    if (!isWriting[selectedLanguage]) {
       const { anchor, head } = selection[selectedLanguage];
 
       handleChange((prevState) => {
@@ -141,7 +141,7 @@ export default function CodeArea({
         prevState[selectedLanguage].head = head;
         return prevState;
       });
-      setIsTrans((prevState) => {
+      setIsWriting((prevState) => {
         return { ...prevState, [selectedLanguage]: true };
       });
     }
