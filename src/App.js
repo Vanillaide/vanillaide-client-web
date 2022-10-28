@@ -32,11 +32,6 @@ export default function App() {
     css: null,
     js: null,
   });
-  const [isTrans, setIsTrans] = useState({
-    html: false,
-    css: false,
-    js: false,
-  });
 
   const [isRunClicked, setIsRunClicked] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -208,7 +203,6 @@ export default function App() {
               selectedLanguage={selectedLanguage}
               handleRunClick={() => setIsRunClicked(true)}
               handleUndoRedoClick={setSelction}
-              handleTrans={setIsTrans}
               view={view[selectedLanguage]}
             />
           </AppHeader>
@@ -221,11 +215,9 @@ export default function App() {
               code={selectedLanguageCode}
               wholeCode={code}
               selection={selection}
-              isTrans={isTrans}
               handleChange={setCode}
               handleUpdate={setSelction}
               handleCreateEditor={setView}
-              handleTrans={setIsTrans}
               selectedLanguage={selectedLanguage}
               isRunClicked={isRunClicked}
               innerHeight={innerHeight}

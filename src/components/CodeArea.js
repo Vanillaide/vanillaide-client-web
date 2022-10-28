@@ -188,7 +188,7 @@ export default function CodeArea({
             <CodeMirror
               value={code}
               theme={atomone}
-              height={`${(innerHeight * 77) / 96}px`}
+              height={`${(innerHeight * 72) / 96}px`}
               extensions={selectLanguageExtension(selectedLanguage)}
               onBlur={handleBlur}
               onChange={handleCodeMirrorChange}
@@ -202,7 +202,7 @@ export default function CodeArea({
             <CodeMirror
               value={code}
               theme={atomone}
-              height={`${(innerHeight * 77) / 96}px`}
+              height={`${(innerHeight * 72) / 96}px`}
               extensions={selectLanguageExtension(selectedLanguage)}
               onBlur={handleBlur}
               onChange={handleCodeMirrorChange}
@@ -216,7 +216,7 @@ export default function CodeArea({
             <CodeMirror
               value={code}
               theme={atomone}
-              height={`${(innerHeight * 77) / 96}px`}
+              height={`${(innerHeight * 72) / 96}px`}
               extensions={selectLanguageExtension(selectedLanguage)}
               onBlur={handleBlur}
               onChange={handleCodeMirrorChange}
