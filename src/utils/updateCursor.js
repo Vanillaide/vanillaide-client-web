@@ -38,7 +38,7 @@ function updateNextCursor(viewUpdate, doc, head, handleNextCursor) {
     docToString.indexOf("\n", initialCursor) < currentHead &&
     docToString.indexOf("\n", initialCursor) !== -1
   ) {
-    initialCursor = doc.toString().indexOf("\n", initialCursor) + 1;
+    initialCursor = docToString.indexOf("\n", initialCursor) + 1;
     lineNumber += 1;
   }
 
@@ -59,7 +59,11 @@ function updateNextCursor(viewUpdate, doc, head, handleNextCursor) {
     return handleNextCursor(currentHead);
   }
 
-  return handleNextCursor(currentHead + currentLineLength) + 1;
+  if (currentHead + currentLineLength + 1 > docToString.length) {
+    return handleNextCursor(docToString.length);
+  }
+
+  return handleNextCursor(currentHead + currentLineLength + 1);
 }
 
 export { updatePrevCursor, updateNextCursor };
