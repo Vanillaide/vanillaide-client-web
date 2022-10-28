@@ -13,6 +13,7 @@ import debounce from "../utils/debounce";
 import integrateCode from "../utils/integrateCode";
 
 import { updatePrevCursor, updateNextCursor } from "../utils/updateCursor";
+
 import { WHITE, DARK_BLUE_150 } from "../constants/color";
 
 function selectLanguageExtension(string) {
@@ -39,6 +40,7 @@ export default function CodeArea({
     css: wholeCode.css.content,
     js: wholeCode.js.content,
   });
+
   const {
     html: { content: htmlCode },
     css: { content: cssCode },

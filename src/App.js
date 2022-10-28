@@ -205,6 +205,7 @@ export default function App() {
               handleRunClick={() => setIsRunClicked(true)}
               handleUndoRedoClick={setSelction}
               view={view[selectedLanguage]}
+
             />
           </AppHeader>
           <ContentBox>
