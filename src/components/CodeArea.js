@@ -31,8 +31,8 @@ export default function CodeArea({
   selectedLanguage,
   isRunClicked,
   innerHeight,
-  setPrevCursor,
-  setNextCursor,
+  handlePrevCursor,
+  handleNextCursor,
 }) {
   const [currentCode, setCurrentCode] = useState(code);
   const {
@@ -84,8 +84,8 @@ export default function CodeArea({
       });
     }
 
-    updatePrevCursor(viewUpdate, doc, head, setPrevCursor);
-    updateNextCursor(viewUpdate, doc, head, setNextCursor);
+    updatePrevCursor(viewUpdate, doc, head, handlePrevCursor);
+    updateNextCursor(viewUpdate, doc, head, handleNextCursor);
   };
 
   const handleEachCreateEditor = (view) => {
@@ -165,8 +165,8 @@ CodeArea.propTypes = {
   selectedLanguage: PropTypes.string.isRequired,
   isRunClicked: PropTypes.bool.isRequired,
   innerHeight: PropTypes.number.isRequired,
-  setPrevCursor: PropTypes.func.isRequired,
-  setNextCursor: PropTypes.func.isRequired,
+  handlePrevCursor: PropTypes.func.isRequired,
+  handleNextCursor: PropTypes.func.isRequired,
 };
 
 const Container = styled.div`

@@ -199,8 +199,8 @@ export default function App() {
               selectedLanguage={selectedLanguage}
               isRunClicked={isRunClicked}
               innerHeight={innerHeight}
-              setPrevCursor={setPrevCursor}
-              setNextCursor={setNextCursor}
+              handlePrevCursor={setPrevCursor}
+              handleNextCursor={setNextCursor}
             />
             <ToolBar handleClick={handleSignClick} />
             <ButtonWrapper>

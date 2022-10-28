@@ -1,4 +1,4 @@
-function updatePrevCursor(viewUpdate, doc, head, setPrevCursor) {
+function updatePrevCursor(viewUpdate, doc, head, handlePrevCursor) {
   let initialCursor = 0;
   let lineNumber = 0;
   let prevEndHead = 0;
@@ -21,13 +21,13 @@ function updatePrevCursor(viewUpdate, doc, head, setPrevCursor) {
   if (currentHead - prevLineLength < 0) return;
 
   if (currentHead - prevEndHead > prevLineLength) {
-    return setPrevCursor(currentHead - (currentHead - prevEndHead));
+    return handlePrevCursor(currentHead - (currentHead - prevEndHead));
   }
 
-  return setPrevCursor(currentHead - prevLineLength);
+  return handlePrevCursor(currentHead - prevLineLength);
 }
 
-function updateNextCursor(viewUpdate, doc, head, setNextCursor) {
+function updateNextCursor(viewUpdate, doc, head, handleNextCursor) {
   let initialCursor = 0;
   let lineNumber = 0;
   const currentHead = head;
@@ -50,14 +50,14 @@ function updateNextCursor(viewUpdate, doc, head, setNextCursor) {
     : null;
 
   if (nextLineLength === 0) {
-    return setNextCursor(nextCursor);
+    return handleNextCursor(nextCursor);
   }
 
   if (nextLineLength === null) {
-    return setNextCursor(currentHead);
+    return handleNextCursor(currentHead);
   }
 
-  return setNextCursor(currentHead + currentLineLength);
+  return handleNextCursor(currentHead + currentLineLength);
 }
 
 export { updatePrevCursor, updateNextCursor };
