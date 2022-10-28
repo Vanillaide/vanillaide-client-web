@@ -14,14 +14,14 @@ function updatePrevCursor(viewUpdate, doc, head, handlePrevCursor) {
     prevEndHead = docToString.indexOf("\n", initialCursor - 1);
   }
 
-  if (lineNumber - 1 < 0) return;
-
   const { viewportLines } = viewUpdate.view.viewState;
-  const prevLineLength = viewportLines[lineNumber - 1].length + 1;
+  const prevLineLength = viewportLines[lineNumber - 1]
+    ? viewportLines[lineNumber - 1].length + 1
+    : 0;
 
   if (currentHead - prevLineLength < 0) return;
 
-  if (currentHead - prevEndHead > prevLineLength) {
+  if (currentHead - prevEndHead > prevLineLength && prevLineLength !== 0) {
     return handlePrevCursor(currentHead - (currentHead - prevEndHead));
   }
 
