@@ -65,14 +65,14 @@ export default function CodeArea({
       };
 
       prevState[language].next = currentContent;
+
       return {
         ...prevState,
         [language]: currentContent,
       };
     });
-    setIsWriting((prevState) => {
-      return { ...prevState, [selectedLanguage]: false };
-    });
+
+    setIsWriting((prevState) => ({ ...prevState, [selectedLanguage]: false }));
   };
 
   const handleBlur = () => {
@@ -98,25 +98,27 @@ export default function CodeArea({
   const handleViewUpdate = (viewUpdate) => {
     const { head, anchor } = viewUpdate.state.selection.ranges[0];
     const { doc } = viewUpdate.state;
-
     const update = { head, anchor };
 
     if (
       selection[selectedLanguage]?.head !== head ||
       selection[selectedLanguage]?.anchor !== anchor
     ) {
-      handleUpdate((prevState) => {
-        return { ...prevState, [selectedLanguage]: update };
-      });
+      handleUpdate((prevState) => ({
+        ...prevState,
+        [selectedLanguage]: update,
+      }));
 
       if (
         code === currentCode[selectedLanguage] &&
         selection[selectedLanguage]
       ) {
         const { head, anchor } = viewUpdate.startState.selection.ranges[0];
+
         handleChange((prevState) => {
           prevState[selectedLanguage].anchor = anchor;
           prevState[selectedLanguage].head = head;
+
           return prevState;
         });
       }
@@ -127,9 +129,10 @@ export default function CodeArea({
   };
 
   const handleEachCreateEditor = (view) => {
-    handleCreateEditor((prevState) => {
-      return { ...prevState, [selectedLanguage]: view };
-    });
+    handleCreateEditor((prevState) => ({
+      ...prevState,
+      [selectedLanguage]: view,
+    }));
   };
 
   const handleCodeMirrorChange = (value, viewUpdate) => {
@@ -139,16 +142,17 @@ export default function CodeArea({
       handleChange((prevState) => {
         prevState[selectedLanguage].anchor = anchor;
         prevState[selectedLanguage].head = head;
+
         return prevState;
       });
-      setIsWriting((prevState) => {
-        return { ...prevState, [selectedLanguage]: true };
-      });
+
+      setIsWriting((prevState) => ({ ...prevState, [selectedLanguage]: true }));
     }
 
-    setCurrentCode((prevState) => {
-      return { ...prevState, [selectedLanguage]: value };
-    });
+    setCurrentCode((prevState) => ({
+      ...prevState,
+      [selectedLanguage]: value,
+    }));
 
     const { anchor, head } = viewUpdate.state.selection.ranges[0];
     const currentSelection = { anchor, head };
@@ -158,6 +162,7 @@ export default function CodeArea({
 
     if (keyPress === " " || keyPress === "\n" || keyPress === "  ") {
       const startValue = viewUpdate.state.doc.toString();
+
       saveContentDebounce(
         startValue,
         code,

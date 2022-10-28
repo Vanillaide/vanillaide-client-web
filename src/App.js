@@ -71,6 +71,7 @@ export default function App() {
     setCode((prevState) => {
       prevState[selectedLanguage].anchor = from;
       prevState[selectedLanguage].head = from;
+
       return prevState;
     });
 

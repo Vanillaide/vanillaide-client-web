@@ -14,18 +14,17 @@ export default function UndoButton({
     view.focus();
 
     if (!code[selectedLanguage].prev) return;
-    handleClick((prevState) => {
-      return {
-        ...prevState,
-        [selectedLanguage]: prevState[selectedLanguage].prev,
-      };
-    });
+    handleClick((prevState) => ({
+      ...prevState,
+      [selectedLanguage]: prevState[selectedLanguage].prev,
+    }));
 
     const { anchor, head } = code[selectedLanguage].prev;
 
-    handleUndoRedoClick((prevState) => {
-      return { ...prevState, [selectedLanguage]: { anchor, head } };
-    });
+    handleUndoRedoClick((prevState) => ({
+      ...prevState,
+      [selectedLanguage]: { anchor, head },
+    }));
   };
 
   return (

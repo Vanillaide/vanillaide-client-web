@@ -13,21 +13,18 @@ export default function RedoButton({
   const handleRedoClick = () => {
     view.focus();
     if (!code[selectedLanguage].next) return;
-    handleClick((prevState) => {
-      return {
-        ...prevState,
-        [selectedLanguage]: prevState[selectedLanguage].next,
-      };
-    });
+
+    handleClick((prevState) => ({
+      ...prevState,
+      [selectedLanguage]: prevState[selectedLanguage].next,
+    }));
 
     const { anchor, head } = code[selectedLanguage].next;
 
-    handleUndoRedoClick((prevState) => {
-      return {
-        ...prevState,
-        [selectedLanguage]: { anchor, head },
-      };
-    });
+    handleUndoRedoClick((prevState) => ({
+      ...prevState,
+      [selectedLanguage]: { anchor, head },
+    }));
   };
 
   return (
