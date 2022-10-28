@@ -31,6 +31,11 @@ export default function App() {
     css: null,
     js: null,
   });
+  const [isTrans, setIsTrans] = useState({
+    html: false,
+    css: false,
+    js: false,
+  });
 
   const [isRunClicked, setIsRunClicked] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -66,11 +71,11 @@ export default function App() {
 
     currentView.dispatch({ changes, selection: { anchor: nextAnchor + 1 } });
 
-    // setCode((prevState) => {
-    //   prevState[selectedLanguage].anchor = from;
-    //   prevState[selectedLanguage].head = from;
-    //   return prevState;
-    // });
+    setCode((prevState) => {
+      prevState[selectedLanguage].anchor = from;
+      prevState[selectedLanguage].head = from;
+      return prevState;
+    });
 
     currentView.focus();
   };
@@ -130,7 +135,7 @@ export default function App() {
 
   return (
     <>
-      {!isLoaded && (
+      {isLoaded && (
         <Layout innerHeight={innerHeight}>
           <AppHeader>
             <MenuWrapper>
@@ -146,6 +151,7 @@ export default function App() {
               selectedLanguage={selectedLanguage}
               handleRunClick={() => setIsRunClicked(true)}
               handleUndoRedoClick={setSelction}
+              handleTrans={setIsTrans}
               view={view[selectedLanguage]}
             />
           </AppHeader>
@@ -158,9 +164,11 @@ export default function App() {
               code={selectedLanguageCode}
               wholeCode={code}
               selection={selection}
+              isTrans={isTrans}
               handleChange={setCode}
               handleUpdate={setSelction}
               handleCreateEditor={setView}
+              handleTrans={setIsTrans}
               selectedLanguage={selectedLanguage}
               isRunClicked={isRunClicked}
               innerHeight={innerHeight}

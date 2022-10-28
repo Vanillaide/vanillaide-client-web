@@ -82,6 +82,16 @@ export default function CodeArea({
     );
   };
 
+  const handleClick = () => {
+    saveContentDebounce(
+      currentCode[selectedLanguage],
+      code,
+      selectedLanguage,
+      selection[selectedLanguage],
+      0,
+    );
+  };
+
   const handleViewUpdate = (viewUpdate) => {
     const { head, anchor } = viewUpdate.state.selection.ranges[0];
 
@@ -94,6 +104,18 @@ export default function CodeArea({
       handleUpdate((prevState) => {
         return { ...prevState, [selectedLanguage]: update };
       });
+
+      if (
+        code === currentCode[selectedLanguage] &&
+        selection[selectedLanguage]
+      ) {
+        const { head, anchor } = viewUpdate.startState.selection.ranges[0];
+        handleChange((prevState) => {
+          prevState[selectedLanguage].anchor = anchor;
+          prevState[selectedLanguage].head = head;
+          return prevState;
+        });
+      }
     }
   };
 
@@ -123,7 +145,28 @@ export default function CodeArea({
 
     const { anchor, head } = viewUpdate.state.selection.ranges[0];
     const currentSelection = { anchor, head };
-    saveContentDebounce(value, code, selectedLanguage, currentSelection, 1000);
+    const keyPress = viewUpdate.transactions[0].changes.inserted
+      .toString()
+      .slice(-1);
+
+    if (keyPress === " " || keyPress === "\n" || keyPress === "  ") {
+      const startValue = viewUpdate.state.doc.toString();
+      saveContentDebounce(
+        startValue,
+        code,
+        selectedLanguage,
+        currentSelection,
+        0,
+      );
+    } else {
+      saveContentDebounce(
+        value,
+        code,
+        selectedLanguage,
+        currentSelection,
+        1000,
+      );
+    }
   };
 
   const saveContentDebounce = useCallback(debounce(saveContent), []);
@@ -143,6 +186,7 @@ export default function CodeArea({
               onChange={handleCodeMirrorChange}
               onUpdate={handleViewUpdate}
               onCreateEditor={handleEachCreateEditor}
+              onClick={handleClick}
               className="editor"
             />
           )}
@@ -156,6 +200,7 @@ export default function CodeArea({
               onChange={handleCodeMirrorChange}
               onUpdate={handleViewUpdate}
               onCreateEditor={handleEachCreateEditor}
+              onClick={handleClick}
               className="editor"
             />
           )}
@@ -169,6 +214,7 @@ export default function CodeArea({
               onChange={handleCodeMirrorChange}
               onUpdate={handleViewUpdate}
               onCreateEditor={handleEachCreateEditor}
+              onClick={handleClick}
               className="editor"
             />
           )}

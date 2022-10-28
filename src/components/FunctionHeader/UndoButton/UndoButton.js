@@ -12,6 +12,7 @@ export default function UndoButton({
 }) {
   const handleUndoClick = () => {
     view.focus();
+
     if (!code[selectedLanguage].prev) return;
     handleClick((prevState) => {
       return {
