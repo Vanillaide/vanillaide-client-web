@@ -13,6 +13,7 @@ import LanguageBar from "./components/LanguageBar";
 import CodeArea from "./components/CodeArea";
 import FunctionHeader from "./components/FunctionHeader/FunctionHeader";
 import ToolBar from "./components/ToolBar";
+import MoveCursorButtons from "./components/MoveCursorButtons/MoveCursorButtons";
 
 export default function App() {
   const [selectedLanguage, setSelectedLanguage] = useState("html");
@@ -39,7 +40,8 @@ export default function App() {
   const [isRunClicked, setIsRunClicked] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [innerHeight, setInnerHeight] = useState(window.innerHeight);
-
+  const [prevCursor, setPrevCursor] = useState(0);
+  const [nextCursor, setNextCursor] = useState(0);
   const selectedLanguageCode = code[selectedLanguage].content;
 
   const handleMenuClick = () => {
@@ -87,6 +89,61 @@ export default function App() {
     setInnerHeight(window.innerHeight);
   };
 
+  const handleMoveUpClick = () => {
+    if (prevCursor < 0) return;
+
+    view[selectedLanguage].dispatch({
+      selection: {
+        head: prevCursor,
+        anchor: prevCursor,
+      },
+    });
+
+    view[selectedLanguage].focus();
+  };
+
+  const handleMoveDownClick = () => {
+    if (nextCursor < 0) return;
+
+    view[selectedLanguage].dispatch({
+      selection: {
+        head: nextCursor,
+        anchor: nextCursor,
+      },
+    });
+
+    view[selectedLanguage].focus();
+  };
+
+  const handleMoveLeftClick = () => {
+    const { head } = view[selectedLanguage].state.selection.ranges[0];
+    const targetHead = head - 1 < 0 ? head : head - 1;
+
+    view[selectedLanguage].dispatch({
+      selection: {
+        head: targetHead,
+        anchor: targetHead,
+      },
+    });
+
+    view[selectedLanguage].focus();
+  };
+
+  const handleMoveRightClick = () => {
+    const { head } = view[selectedLanguage].state.selection.ranges[0];
+    const { doc } = view[selectedLanguage].state;
+    const targetHead = head + 1 > doc.toString().length ? head : head + 1;
+
+    view[selectedLanguage].dispatch({
+      selection: {
+        head: targetHead,
+        anchor: targetHead,
+      },
+    });
+
+    view[selectedLanguage].focus();
+  };
+
   useEffect(() => {
     document.addEventListener("message", handleOnMessage);
     window.addEventListener("resize", handleResize);
@@ -131,8 +188,18 @@ export default function App() {
               selectedLanguage={selectedLanguage}
               isRunClicked={isRunClicked}
               innerHeight={innerHeight}
+              handlePrevCursor={setPrevCursor}
+              handleNextCursor={setNextCursor}
             />
             <ToolBar handleClick={handleSignClick} />
+            <ButtonWrapper>
+              <MoveCursorButtons
+                handleMoveUpClick={handleMoveUpClick}
+                handleMoveDownClick={handleMoveDownClick}
+                handleMoveLeftClick={handleMoveLeftClick}
+                handleMoveRightClick={handleMoveRightClick}
+              />
+            </ButtonWrapper>
           </ContentBox>
         </Layout>
       )}
@@ -146,4 +213,11 @@ const MenuWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   padding-left: 20px;
+`;
+
+const ButtonWrapper = styled.div`
+  position: fixed;
+  z-index: 1;
+  height: 100vh;
+  margin: -20px;
 `;
