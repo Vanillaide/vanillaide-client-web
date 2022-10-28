@@ -42,5 +42,5 @@ UndoButton.propTypes = {
   handleClick: PropTypes.func.isRequired,
   selectedLanguage: PropTypes.string.isRequired,
   handleUndoRedoClick: PropTypes.func.isRequired,
-  view: PropTypes.object.isRequired,
+  view: PropTypes.object,
 };

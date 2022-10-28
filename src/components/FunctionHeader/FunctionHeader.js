@@ -41,7 +41,7 @@ FunctionHeader.propTypes = {
   handleClick: PropTypes.func.isRequired,
   selectedLanguage: PropTypes.string.isRequired,
   handleRunClick: PropTypes.func.isRequired,
-  handleUndoRedoClick: PropTypes.func,
+  handleUndoRedoClick: PropTypes.func.isRequired,
   view: PropTypes.object,
 };
 
