@@ -12,6 +12,8 @@ import { atomone } from "@uiw/codemirror-theme-atomone";
 import debounce from "../utils/debounce";
 import integrateCode from "../utils/integrateCode";
 
+import { updatePrevCursor, updateNextCursor } from "../utils/updateCursor";
+
 import { WHITE, DARK_BLUE_150 } from "../constants/color";
 
 function selectLanguageExtension(string) {
@@ -23,67 +25,215 @@ function selectLanguageExtension(string) {
 export default function CodeArea({
   code,
   wholeCode,
+  selection,
   handleChange,
+  handleUpdate,
+  handleCreateEditor,
   selectedLanguage,
   isRunClicked,
   innerHeight,
+  handlePrevCursor,
+  handleNextCursor,
 }) {
-  const [currentCode, setCurrentCode] = useState(code);
+  const [currentCode, setCurrentCode] = useState({
+    html: wholeCode.html.content,
+    css: wholeCode.css.content,
+    js: wholeCode.js.content,
+  });
+
   const {
     html: { content: htmlCode },
     css: { content: cssCode },
     js: { content: jsCode },
   } = wholeCode;
 
-  const saveContent = (text, prevText, language) => {
+  const [isWriting, setIsWriting] = useState({
+    html: false,
+    css: false,
+    js: false,
+  });
+
+  const saveContent = (text, prevText, language, currentSelection) => {
     if (text === prevText) return;
 
     handleChange((prevState) => {
+      const { anchor, head } = currentSelection;
       const currentContent = {
         content: text,
+        anchor: anchor,
+        head: head,
         prev: prevState[language],
         next: null,
       };
 
       prevState[language].next = currentContent;
+
       return {
         ...prevState,
         [language]: currentContent,
       };
     });
-  };
 
-  const handleKeyUp = (ev) => {
-    if (ev.code === "Enter" || ev.code === "Space" || ev.code === "Tab") {
-      saveContentDebounce(currentCode, code, selectedLanguage, 0);
-    }
+    setIsWriting((prevState) => ({ ...prevState, [selectedLanguage]: false }));
   };
 
   const handleBlur = () => {
-    saveContentDebounce(currentCode, code, selectedLanguage, 0);
+    saveContentDebounce(
+      currentCode[selectedLanguage],
+      code,
+      selectedLanguage,
+      selection[selectedLanguage],
+      0,
+    );
   };
 
-  const handleCodeMirrorChange = (value) => {
-    setCurrentCode(value);
-    saveContentDebounce(value, code, selectedLanguage, 1000);
+  const handleClick = () => {
+    saveContentDebounce(
+      currentCode[selectedLanguage],
+      code,
+      selectedLanguage,
+      selection[selectedLanguage],
+      0,
+    );
+  };
+
+  const handleViewUpdate = (viewUpdate) => {
+    const { head, anchor } = viewUpdate.state.selection.ranges[0];
+    const { doc } = viewUpdate.state;
+    const update = { head, anchor };
+
+    if (
+      selection[selectedLanguage]?.head !== head ||
+      selection[selectedLanguage]?.anchor !== anchor
+    ) {
+      handleUpdate((prevState) => ({
+        ...prevState,
+        [selectedLanguage]: update,
+      }));
+
+      if (
+        code === currentCode[selectedLanguage] &&
+        selection[selectedLanguage]
+      ) {
+        const { head, anchor } = viewUpdate.startState.selection.ranges[0];
+
+        handleChange((prevState) => {
+          prevState[selectedLanguage].anchor = anchor;
+          prevState[selectedLanguage].head = head;
+
+          return prevState;
+        });
+      }
+    }
+
+    updatePrevCursor(viewUpdate, doc, head, handlePrevCursor);
+    updateNextCursor(viewUpdate, doc, head, handleNextCursor);
+  };
+
+  const handleEachCreateEditor = (view) => {
+    handleCreateEditor((prevState) => ({
+      ...prevState,
+      [selectedLanguage]: view,
+    }));
+  };
+
+  const handleCodeMirrorChange = (value, viewUpdate) => {
+    if (!isWriting[selectedLanguage]) {
+      const { anchor, head } = selection[selectedLanguage];
+
+      handleChange((prevState) => {
+        prevState[selectedLanguage].anchor = anchor;
+        prevState[selectedLanguage].head = head;
+
+        return prevState;
+      });
+
+      setIsWriting((prevState) => ({ ...prevState, [selectedLanguage]: true }));
+    }
+
+    setCurrentCode((prevState) => ({
+      ...prevState,
+      [selectedLanguage]: value,
+    }));
+
+    const { anchor, head } = viewUpdate.state.selection.ranges[0];
+    const currentSelection = { anchor, head };
+    const keyPress = viewUpdate.transactions[0].changes.inserted
+      .toString()
+      .slice(-1);
+
+    if (keyPress === " " || keyPress === "\n" || keyPress === "  ") {
+      const startValue = viewUpdate.state.doc.toString();
+
+      saveContentDebounce(
+        startValue,
+        code,
+        selectedLanguage,
+        currentSelection,
+        0,
+      );
+    } else {
+      saveContentDebounce(
+        value,
+        code,
+        selectedLanguage,
+        currentSelection,
+        1000,
+      );
+    }
   };
 
   const saveContentDebounce = useCallback(debounce(saveContent), []);
+
   return (
     <Container>
       {isRunClicked ? (
         <ResultViewer srcDoc={integrateCode(htmlCode, cssCode, jsCode)} />
       ) : (
-        <CodeMirror
-          value={code}
-          theme={atomone}
-          height={`${(innerHeight * 77) / 96}px`}
-          extensions={selectLanguageExtension(selectedLanguage)}
-          onBlur={handleBlur}
-          onChange={handleCodeMirrorChange}
-          onKeyUp={handleKeyUp}
-          className="editor"
-        />
+        <>
+          {selectedLanguage === "html" && (
+            <CodeMirror
+              value={code}
+              theme={atomone}
+              height={`${(innerHeight * 72) / 96}px`}
+              extensions={selectLanguageExtension(selectedLanguage)}
+              onBlur={handleBlur}
+              onChange={handleCodeMirrorChange}
+              onUpdate={handleViewUpdate}
+              onCreateEditor={handleEachCreateEditor}
+              onClick={handleClick}
+              className="editor"
+            />
+          )}
+          {selectedLanguage === "css" && (
+            <CodeMirror
+              value={code}
+              theme={atomone}
+              height={`${(innerHeight * 72) / 96}px`}
+              extensions={selectLanguageExtension(selectedLanguage)}
+              onBlur={handleBlur}
+              onChange={handleCodeMirrorChange}
+              onUpdate={handleViewUpdate}
+              onCreateEditor={handleEachCreateEditor}
+              onClick={handleClick}
+              className="editor"
+            />
+          )}
+          {selectedLanguage === "js" && (
+            <CodeMirror
+              value={code}
+              theme={atomone}
+              height={`${(innerHeight * 72) / 96}px`}
+              extensions={selectLanguageExtension(selectedLanguage)}
+              onBlur={handleBlur}
+              onChange={handleCodeMirrorChange}
+              onUpdate={handleViewUpdate}
+              onCreateEditor={handleEachCreateEditor}
+              onClick={handleClick}
+              className="editor"
+            />
+          )}
+        </>
       )}
     </Container>
   );
@@ -92,10 +242,15 @@ export default function CodeArea({
 CodeArea.propTypes = {
   code: PropTypes.string,
   wholeCode: PropTypes.object.isRequired,
-  handleChange: PropTypes.func,
+  selection: PropTypes.object.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleUpdate: PropTypes.func.isRequired,
+  handleCreateEditor: PropTypes.func.isRequired,
   selectedLanguage: PropTypes.string.isRequired,
   isRunClicked: PropTypes.bool.isRequired,
   innerHeight: PropTypes.number.isRequired,
+  handlePrevCursor: PropTypes.func.isRequired,
+  handleNextCursor: PropTypes.func.isRequired,
 };
 
 const Container = styled.div`

@@ -21,4 +21,5 @@ const Container = styled.div`
   justify-content: center;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
+  user-select: none;
 `;

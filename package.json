@@ -1,6 +1,6 @@
 {
   "name": "vanillaide-client-web",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@codemirror/lang-css": "^6.0.0",
