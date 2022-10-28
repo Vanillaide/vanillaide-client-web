@@ -12,6 +12,7 @@ import { atomone } from "@uiw/codemirror-theme-atomone";
 import debounce from "../utils/debounce";
 import integrateCode from "../utils/integrateCode";
 
+import { updatePrevCursor, updateNextCursor } from "../utils/updateCursor";
 import { WHITE, DARK_BLUE_150 } from "../constants/color";
 
 function selectLanguageExtension(string) {
@@ -30,6 +31,8 @@ export default function CodeArea({
   selectedLanguage,
   isRunClicked,
   innerHeight,
+  handlePrevCursor,
+  handleNextCursor,
 }) {
   const [currentCode, setCurrentCode] = useState({
     html: wholeCode.html.content,
@@ -94,6 +97,7 @@ export default function CodeArea({
 
   const handleViewUpdate = (viewUpdate) => {
     const { head, anchor } = viewUpdate.state.selection.ranges[0];
+    const { doc } = viewUpdate.state;
 
     const update = { head, anchor };
 
@@ -117,6 +121,9 @@ export default function CodeArea({
         });
       }
     }
+
+    updatePrevCursor(viewUpdate, doc, head, handlePrevCursor);
+    updateNextCursor(viewUpdate, doc, head, handleNextCursor);
   };
 
   const handleEachCreateEditor = (view) => {
@@ -170,6 +177,7 @@ export default function CodeArea({
   };
 
   const saveContentDebounce = useCallback(debounce(saveContent), []);
+
   return (
     <Container>
       {isRunClicked ? (
@@ -234,6 +242,8 @@ CodeArea.propTypes = {
   selectedLanguage: PropTypes.string.isRequired,
   isRunClicked: PropTypes.bool.isRequired,
   innerHeight: PropTypes.number.isRequired,
+  handlePrevCursor: PropTypes.func.isRequired,
+  handleNextCursor: PropTypes.func.isRequired,
 };
 
 const Container = styled.div`
