@@ -1,4 +1,5 @@
 # Vanillaide
+
 <p align="center">
   <img style="width:500px" src="https://user-images.githubusercontent.com/99792713/199458778-30b3b65a-cb14-4807-bf07-7fbeb6a91a6b.png" alt="vanillaide-logo" />
 </p>
@@ -37,6 +38,7 @@ HTML, CSS, Javascript 코드를 작성할 수 있고, 배포 후에는 친구에
 <br/>
 
 # Contents
+
 - [Vanillaide](#vanillaide)
 - [Contents](#contents)
 - [Features](#features)
@@ -65,7 +67,7 @@ HTML, CSS, Javascript 코드를 작성할 수 있고, 배포 후에는 친구에
       Sign up, Sign in
     </td>
     <td align="center">
-      <img style="width:200px" src="https://user-images.githubusercontent.com/99792713/199439816-30a88b74-3710-4e56-9da5-4ac0f5bbc383.gif"/>
+      <img style="width:200px" src="https://user-images.githubusercontent.com/110377189/204216191-23e25683-ff80-43b5-9876-97c4553fd19d.gif"/>
     </td>
     <td>
     <ul>
@@ -81,7 +83,7 @@ HTML, CSS, Javascript 코드를 작성할 수 있고, 배포 후에는 친구에
       My projects
     </td>
     <td align="center">
-      <img style="width:200px" src="https://user-images.githubusercontent.com/99792713/199437107-2eaf2153-e9a2-4031-93c5-44e3591c945a.gif"/>
+      <img style="width:200px" src="https://user-images.githubusercontent.com/110377189/204216351-a018f1b0-173e-4166-b47e-51e195b6f507.gif"/>
     </td>
     <td>
     <ul>
@@ -99,7 +101,7 @@ HTML, CSS, Javascript 코드를 작성할 수 있고, 배포 후에는 친구에
       Editor
     </td>
     <td align="center">
-      <img style="width:200px" src="https://user-images.githubusercontent.com/99792713/199436407-339ed74f-80d4-4ffb-8371-4f91f77f10bf.gif"/>
+      <img style="width:200px" src="https://user-images.githubusercontent.com/110377189/204216347-60c4941e-a55a-4bc6-af19-cdf2378cd17a.gif"/>
     </td>
     <td>
     <ul>
@@ -116,7 +118,7 @@ HTML, CSS, Javascript 코드를 작성할 수 있고, 배포 후에는 친구에
       Deploy
     </td>
     <td align="center">
-      <img style="width:500px" src="https://user-images.githubusercontent.com/99792713/199437967-64502aad-a101-4dec-a894-827d5eabdaf5.gif"/>
+      <img style="width:500px" src="https://user-images.githubusercontent.com/110377189/204216341-9adf4c9d-262d-4ec1-8863-a04717318610.gif"/>
     </td>
     <td>
     <ul>
@@ -132,7 +134,7 @@ HTML, CSS, Javascript 코드를 작성할 수 있고, 배포 후에는 친구에
       Performance
     </td>
     <td align="center">
-      <img style="width:200px" src="https://user-images.githubusercontent.com/99792713/199439851-40212d39-17c2-4542-8b74-55b6ea2428b8.gif"/>
+      <img style="width:200px" src="https://user-images.githubusercontent.com/110377189/204216352-bb2de1d9-df2a-4504-a161-c53c4832cfec.gif"/>
     </td>
     <td>
     <ul>
@@ -148,6 +150,7 @@ HTML, CSS, Javascript 코드를 작성할 수 있고, 배포 후에는 친구에
 <br/>
 
 # Challenges
+
 ### React Native Life Cycle 이해
 
 브라우저에서 실행되는 React와 다르게, React native는 스크린 화면이 stack 구조로 쌓이고, componentWillUnmount가 다르게 동작하여, 새로운 페이지에서 기존 Project list 페이지로 다시 이동하더라도 useEffect가 실행되지 않는 문제점이 있었습니다.
@@ -157,6 +160,7 @@ HTML, CSS, Javascript 코드를 작성할 수 있고, 배포 후에는 친구에
 <br/>
 
 ### Undo/Redo
+
 원래 CodeMirror는 Ctrl+z, Ctrl+Shift+z로 undo와 redo기능을 제공하고 있습니다.
 
 하지만 모바일 환경에서 Undo, Redo를 버튼으로 동작하게 하기위해서, code의 data structure를 linked list로 구현하였습니다.
@@ -173,6 +177,7 @@ HTML, CSS, Javascript 코드를 작성할 수 있고, 배포 후에는 친구에
 	next: node, // 다음 상태가 저장됩니다.
 }
 ```
+
 </details>
 
 <br/>
@@ -217,7 +222,7 @@ abcd efg
 |
 
 [node5]
-abcd efg 
+abcd efg
 nopqrstuvwxyz| - 각 space, enter 입력마다 상태 저장
 
 4. caret 이동 후 입력 시작시 '현재상태의 anchor, head 변경'
@@ -299,7 +304,7 @@ ahij|g
 
 <br/>
 
-**```<span>```, ```<div>```를 사용한 구현 시도 내용 및 Codemirror 구현 로직 조사**
+**`<span>`, `<div>`를 사용한 구현 시도 내용 및 Codemirror 구현 로직 조사**
 
 ```html
 <pre id="code-editor">
@@ -315,7 +320,7 @@ ahij|g
 </pre>
 ```
 
-POC 단계에서의 기술적 시도는 ```<span>```이나 ```<div>```태그를 이용한 이어붙이기 방식이었습니다.
+POC 단계에서의 기술적 시도는 `<span>`이나 `<div>`태그를 이용한 이어붙이기 방식이었습니다.
 
 그러나 이 방법을 사용할 경우 사용자로 하여금 내가 실제로 텍스트를 입력중이라는 느낌을 받게 하는 것이 어려웠습니다.
 
@@ -332,33 +337,44 @@ POC 단계에서의 기술적 시도는 ```<span>```이나 ```<div>```태그를 
 뿐만 아니라 기존 내용을 수정함에 있어서도 ‘현재 선택된 `div`, `span`요소’를 판단하고 이를 다시 수정하게끔 하는 것이 앞서 언급한 ‘입력하고 있다는 느낌을 주는 것’과 결합되면 단기간 안에 구현할 수 있는 것이 아니라는 생각을 하게 되었습니다.
 
 추후 충분한 시간이 주어진다면 앞서 시도해본 내용을 좀 더 발전시켜 직접 코드 에디터 기능을 구현해보고 싶습니다.
+
 </details>
 
 <br/>
 <br/>
 
 # Tech Stacks
+
 ### Client
+
 - React
--  React Native (Expo)
--  React Native Webview
+- React Native (Expo)
+- React Native Webview
 - React Native Navigation
--  Context API
+- Context API
+
 ### Client-Web
+
 - React
 - Styled Components
+
 ### Server
+
 - Node JS
 - Express
 - MongoDB & Mongoose
 - Ejs
 - Node Schedule
+
 ### Testing
+
 - Jest
 - React Testing Library
 - Node Mocks Http
 - Supertest
+
 ### Deployment
+
 - Netlify
 - AWS Elastic Beanstalk
 
@@ -366,9 +382,10 @@ POC 단계에서의 기술적 시도는 ```<span>```이나 ```<div>```태그를 
 <br/>
 
 # Github Repositories
--  [Backend Repo](https://github.com/Vanillaide/vanillaide-server)
--  [Frontend Repo](https://github.com/Vanillaide/vanillaide-client-web)
--  [React-Native Repo](https://github.com/Vanillaide/vanillaide-client)
+
+- [Backend Repo](https://github.com/Vanillaide/vanillaide-server)
+- [Frontend Repo](https://github.com/Vanillaide/vanillaide-client-web)
+- [React-Native Repo](https://github.com/Vanillaide/vanillaide-client)
 
 <br/>
 <br/>
@@ -550,48 +567,50 @@ POC 단계에서의 기술적 시도는 ```<span>```이나 ```<div>```태그를 
 <br/>
 
 # How to start
+
 ### Client (Web)
 
-1. [해당 Repository](https://github.com/Vanillaide/vanillaide-client-web)를 git clone을 합니다.
+1.  [해당 Repository](https://github.com/Vanillaide/vanillaide-client-web)를 git clone을 합니다.
 
-2. 해당 프로젝트 폴더 내에서 아래의 명령어를 실행합니다.
+2.  해당 프로젝트 폴더 내에서 아래의 명령어를 실행합니다.
 
-    ```
-    $ npm install
-    $ npm start
-    ```
-<br/>
+        ```
+        $ npm install
+        $ npm start
+        ```
+
+    <br/>
 
 ### Client (React Native Mobile App)
 
 1. [해당 Repository](https://github.com/Vanillaide/vanillaide-client)를 git clone을 합니다.
 2. environment.js 파일에 아래와 같이 환경 변수를 입력합니다.
 
-    ```jsx
-    import Constants from "expo-constants";
+   ```jsx
+   import Constants from "expo-constants";
 
-    const ENV = {
-      dev: {
-        BACK_URL: <origin uri: default = "http://localhost:8000">
-        WEBVIEW_URL: <origin uri: default = "http://localhost:3000">
-      },
-    };
+   const ENV = {
+     dev: {
+       BACK_URL: <origin uri: default = "http://localhost:8000">
+       WEBVIEW_URL: <origin uri: default = "http://localhost:3000">
+     },
+   };
 
-    const getEnvVars = (env = Constants.manifest.releaseChannel) => {
-      if (__DEV__) {
-        return ENV.dev;
-      }
-    };
+   const getEnvVars = (env = Constants.manifest.releaseChannel) => {
+     if (__DEV__) {
+       return ENV.dev;
+     }
+   };
 
-    export default getEnvVars;
-    ```
+   export default getEnvVars;
+   ```
 
 3. 해당 프로젝트 폴더 내에서 아래의 명령어를 실행합니다.
 
-    ```
-    $ npm install
-    $ npm run start
-    ```
+   ```
+   $ npm install
+   $ npm run start
+   ```
 
 4. Android의 경우 PlayStore에서 `Expo`를 IOS의 경우 AppStore에서 `Expo Go`를 다운로드 받습니다.
 5. 해당 Expo어플리케이션에서 QR코드인식 모드를 켭니다.
@@ -604,18 +623,18 @@ POC 단계에서의 기술적 시도는 ```<span>```이나 ```<div>```태그를 
 1. [해당 Repository](https://github.com/Vanillaide/vanillaide-server)를 git clone을 합니다.
 2. 환경변수 파일(.env)을 생성하고 아래와 같은 형식으로 입력합니다.
 
-    ```
-    DB_HOST=<db host>
-    JWT_SECRET_KEY=<jwt secret key>
-    BACK_URL=<origin uri: default = "http://localhost:8000">
-    ```
+   ```
+   DB_HOST=<db host>
+   JWT_SECRET_KEY=<jwt secret key>
+   BACK_URL=<origin uri: default = "http://localhost:8000">
+   ```
 
 3. 해당 프로젝트 폴더 내에서 아래의 명령어를 실행합니다.
 
-    ```
-    $ npm install
-    $ npm run start
-    ```
+   ```
+   $ npm install
+   $ npm run start
+   ```
 
 <br/>
 <br/>
@@ -632,9 +651,7 @@ POC 단계에서의 기술적 시도는 ```<span>```이나 ```<div>```태그를 
 - Server Endpoint 정의
 - Git, Code Style 조율
 - Task Scheduling 및 Role 정의
-- 개발 환경 셋업
-    - React Native Expo
-    - Express (Node.js)
+- 개발 환경 셋업 - React Native Expo - Express (Node.js)
 </details>
 
 <details>
@@ -658,23 +675,22 @@ POC 단계에서의 기술적 시도는 ```<span>```이나 ```<div>```태그를 
 - Code Style 통일, Component 분리 작업
 - 파일, 폴더 구조 개선
 - Client / Server Test Code 작성
-- Client / Server 배포
-    - Client(Web) : Netlify
-    - Server : Amazon Elastic Beanstalk
+- Client / Server 배포 - Client(Web) : Netlify - Server : Amazon Elastic Beanstalk
 </details>
 
 <br/>
 <br/>
 
 # Member
+
 - 박태욱
 
   Contact : dcjimin@gmail.com
 
 - 예소현
 
-  Contact : needtlc13@gmail.com 
+  Contact : needtlc13@gmail.com
 
 - 한지수
 
-  Contact :  jessie.jisu.h@gmail.com
+  Contact : jessie.jisu.h@gmail.com
